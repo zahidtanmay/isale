@@ -6,7 +6,8 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
     "@nuxt/content": "^1.5.0",
@@ -16,6 +17,7 @@
     "@nuxtjs/toast": "^3.3.1",
     "lodash": "^4.17.19",
     "nuxt": "^2.14.0",
+    "push-dir": "^0.4.1",
     "vue-lodash": "^2.1.2",
     "vue-product-zoomer": "^3.0.1",
     "vuex-persistedstate": "^3.1.0"
