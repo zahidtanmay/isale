@@ -123,7 +123,6 @@ export default {
   },
 
   router: {
-    base: '/i-sale/',
     middleware: ['auth'],
     linkActiveClass: 'active-link',
     linkExactActiveClass: 'exact-active-link',

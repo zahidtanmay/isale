@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
 
-    <LandingBanner/>
+    <!--<LandingBanner/>-->
 
     <LandingCategories/>
 
