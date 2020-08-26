@@ -77,6 +77,7 @@ export const actions = {
       let { data } = await this.$axios.post(`/locations`, JSON.stringify(location))
       this.$toast.success('Location added Successfully')
       let newLocation = Object.assign({}, location)
+      newLocation.locationId = data.id
       newLocation.id = data.id
       context.commit('ADD_LOCATION', location)
       context.commit('component/setAddressDialog', false, { root: true })
