@@ -28,8 +28,8 @@
             </v-card-title>
             <v-list-item dense>
               <v-list-item-content>
-                <v-list-item-title>{{deliveryDay}}</v-list-item-title>
-                <v-list-item-subtitle>{{deliveryTime.title}}</v-list-item-subtitle>
+                <v-list-item-title>{{checkoutDetails.deliveryDay}}</v-list-item-title>
+                <v-list-item-subtitle>{{checkoutDetails.deliveryTime.title}}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-card>
@@ -44,10 +44,36 @@
           </v-card-title>
 
           <v-card-text>
-            <div>Subtotal: {{checkoutDetails['total']}}</div>
+            <v-row class="footer-info-row mt-4">
+              <v-col md="6" align="end">Subtotal:</v-col>
+              <v-col md="6"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['subTotal']}}</v-col>
+            </v-row>
             <template v-for="(ledger, index) in ledgers">
-              <div>{{ledger.name}}: {{ledger.value}}</div>
+              <v-row class="footer-info-row">
+                <v-col md="6" align="end">{{ledger.name}}:</v-col>
+                <v-col md="6"><v-icon small>mdi-currency-bdt</v-icon>{{ledger.value}}</v-col>
+              </v-row>
             </template>
+
+            <v-row class="footer-info-row">
+              <v-col md="6" align="end">Discount:</v-col>
+              <v-col md="6"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['discountTotal']}}</v-col>
+            </v-row>
+
+            <v-row class="footer-info-row">
+              <v-col md="6" align="end">Total:</v-col>
+              <v-col md="6"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['total'] + checkoutDetails['ledgerTotal']}}</v-col>
+            </v-row>
+
+            <v-row class="footer-info-row">
+              <v-col md="6" align="end">Paid:</v-col>
+              <v-col md="6"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['paidAmount'] + checkoutDetails['ledgerPaidTotal']}}</v-col>
+            </v-row>
+
+            <v-row class="footer-info-row">
+              <v-col md="6" align="end">Due:</v-col>
+              <v-col md="6"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['dueAmount'] + checkoutDetails['ledgerTotal']}}</v-col>
+            </v-row>
 
           </v-card-text>
         </v-card>

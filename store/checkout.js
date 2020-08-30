@@ -81,24 +81,24 @@ export const actions = {
     checkout.chequeDate = ''
     checkout.bankId = 1
 
-    checkout.locationId = state.checkoutLocation
+    checkout.locationId = state.checkoutLocation.id
     checkout.note = state.deliveryNote ? state.deliveryNote : 'demo'
     checkout.deliveryDay = state.deliveryDay ? state.deliveryDay : ''
     checkout.deliveryTime = state.deliveryTime ? state.deliveryTime : ''
 
-    checkout.lessAmount = '0'
-    checkout.saleTypesId = '1'
+    checkout.lessAmount = 0
+    checkout.saleTypesId = 1
     checkout.salesPersonId = '116'
     checkout.salesDate = '5-5-2020'
     checkout.discountCode = ''
 
     checkout.discountPercent = 0
-    checkout.discountTotal = 0
+    checkout.discountTotal = rootState.cart.cartTotalDiscount
     checkout.totalVat = 0
 
     checkout.paidAmount = 0
     checkout.returnAmount = 0
-    checkout.total = rootState.cart.cartTotalDiscount > 0 ? rootState.cart.cartTotal : rootState.cart.cartDiscountedTotal
+    checkout.total = rootState.cart.cartTotalDiscount > 0 ? rootState.cart.cartDiscountedTotal : rootState.cart.cartTotal
     checkout.dueAmount = checkout.total - checkout.paidAmount
     console.log(checkout)
 
@@ -107,6 +107,9 @@ export const actions = {
       commit('SET_ORDER_ID', data.data.id)
       commit('SET_CHECKOUT_DETAILS', checkout)
       commit('cart/RESET_CART', null, { root: true })
+      commit('SET_DELIVERY_DAY', null)
+      commit('SET_DELIVERY_TIME', null)
+      commit('SET_DELIVERY_NOTE', '')
     } catch (e) {
       console.log(e)
     }

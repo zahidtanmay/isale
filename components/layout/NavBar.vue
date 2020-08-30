@@ -53,7 +53,7 @@
             <!--@click.prevent="routeLink(cat, null, null, category.slug)"-->
 
             <template slot="activator">
-              <v-list-item-icon>
+              <v-list-item-icon class="main-nav-left-icon">
                 <v-icon>{{ `mdi-${category.icon}` }}</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
@@ -106,7 +106,7 @@
                   :to="subCategory.slug"
                   class="single-sub-group"
                 >
-                  <v-list-item-icon>
+                  <v-list-item-icon class="main-nav-left-icon">
                     <v-icon>{{ `mdi-${subCategory.icon}` }}</v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
@@ -128,7 +128,7 @@
         <template v-else>
           <v-list-item link :to="category.name" :key="category.name">
             <!--@click="routeLink(cat)"-->
-            <v-list-item-icon>
+            <v-list-item-icon class="main-nav-left-icon">
               <v-icon>{{ `mdi-${category.icon}` }}</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
@@ -207,7 +207,7 @@
 
   .main-side-nav-list { padding: 0 !important; }
 
-  .main-side-nav-list .v-list-item__title { font-weight: 200 !important; font-size: .9rem !important; }
+  .main-side-nav-list .v-list-item__title { font-weight: 200 !important; font-size: .8rem !important; }
 
   .main-nav .v-list-item--active { font-weight: 700 !important; color: $nav-active-color; }
 
@@ -220,5 +220,7 @@
   .single-sub-group { padding-left: 70px; }
 
   .nav-active-icon { color: $nav-active-color !important; }
+
+  .main-nav-left-icon { margin-right: 6px !important; }
 
 </style>

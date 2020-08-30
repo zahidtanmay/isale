@@ -7,53 +7,14 @@
 
     <LandingExplore/>
 
-    <v-footer
-      dark
-      padless
-      class="mt-12"
-    >
+    <div class="headline text-center my-6">
+      What Our Clients Saying
+    </div>
 
-      <v-card
-        flat
-        tile
-        class="lighten-1 white--text"
-        style="background: none"
-      >
-        <v-card-text class="text-center">
-          <v-btn
-            v-for="icon in icons"
-            :key="icon"
-            class="mx-4 white--text"
-            icon
-          >
-            <v-icon size="24px">{{ icon }}</v-icon>
-          </v-btn>
+    <ClientsSaying/>
 
+    <Footer/>
 
-        </v-card-text>
-
-        <v-card-text class="white--text pt-0">
-          <v-row>
-            <v-col cols="12" md="7">{{company.about}}</v-col>
-            <v-col cols="12" md="5">
-              <div>Mobile: {{company.mobile}}</div>
-              <div>Telephone: {{company.telephone}}</div>
-              <div>Email: {{company.email}}</div>
-              <div>Address: {{company.address}}</div>
-              <div>{{company.city}}, {{company.district}}-{{company.zip}}</div>
-            </v-col>
-          </v-row>
-
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-text class="white--text text-center">
-          {{ new Date().getFullYear() }} — <strong>{{company.name}}</strong>
-        </v-card-text>
-      </v-card>
-
-    </v-footer>
 
   </v-container>
 </template>
@@ -63,6 +24,8 @@
   import LandingBanner from '~/components/landing/LandingBanner'
   import LandingCategories from '~/components/landing/LandingCategories'
   import LandingExplore from '~/components/landing/LandingExplore'
+  import ClientsSaying from '~/components/landing/ClientsSaying'
+  import Footer from '~/components/landing/Footer'
 
   export default {
     name: 'Dashboard',
@@ -71,7 +34,9 @@
     components: {
       LandingBanner,
       LandingCategories,
-      LandingExplore
+      LandingExplore,
+      ClientsSaying,
+      Footer
     },
 
     head () {
@@ -91,21 +56,6 @@
     mounted(){
       // console.log('landing index')
     },
-
-    data: () => ({
-      icons: [
-        'mdi-facebook',
-        'mdi-twitter',
-        'mdi-linkedin',
-        'mdi-instagram',
-      ],
-    }),
-
-    computed: {
-      ...mapGetters({
-        company: 'bootstrap/getCompanyDetails'
-      })
-    }
 
 
   }

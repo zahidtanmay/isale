@@ -1,28 +1,32 @@
 <template>
 
   <v-app-bar app clipped-left clipped-right flat class="main-nav-bar">
+      <v-app-bar-nav-icon @click="setNavDrawer"></v-app-bar-nav-icon>
 
-    <v-app-bar-nav-icon @click="setNavDrawer"></v-app-bar-nav-icon>
 
-    <nuxt-link to="/" class="main-logo black--text">
-      <v-img
-        :src="company.logo"
-        contain
-        max-height="60px"
-        width="80px"
-        class="mx-8"
-      ></v-img>
-      <!--<span class="title ml-3 mr-5">E&nbsp;<span class="font-weight-light">Shop</span></span>-->
-    </nuxt-link>
+      <nuxt-link to="/" class="main-logo black--text">
+        <v-img
+          :src="company.logo"
+          contain
+          max-height="60px"
+          width="80px"
+          class="mx-8"
+        ></v-img>
+        <!--<span class="title ml-3 mr-5">E&nbsp;<span class="font-weight-light">Shop</span></span>-->
+      </nuxt-link>
 
-    <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search"></v-text-field>
 
-    <v-spacer></v-spacer>
 
-    <v-spacer></v-spacer>
 
-    <!--<no-ssr>-->
+      <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search"></v-text-field>
+
+      <v-spacer></v-spacer>
+
+      <v-spacer></v-spacer>
+
+
       <template v-if="loggedIn">
+
         <div><v-menu
           bottom
         >
@@ -49,14 +53,11 @@
       </template>
 
       <template v-else>
-          <v-btn color="error" dark large tile outlined @click="setLoginDialog" class="my-2 d-none d-md-flex">Sign In</v-btn>
-          <v-btn icon @click="setLoginDialog" class="d-md-none"><v-icon>mdi-login</v-icon></v-btn>
+        <v-btn color="error" dark large tile outlined @click="setLoginDialog" class="my-2 d-none d-md-flex">Sign In</v-btn>
+        <v-btn icon @click="setLoginDialog" class="d-md-none"><v-icon>mdi-login</v-icon></v-btn>
       </template>
 
-    <!--</no-ssr>-->
-
-
-    <login-dialog></login-dialog>
+      <login-dialog></login-dialog>
 
   </v-app-bar>
 </template>

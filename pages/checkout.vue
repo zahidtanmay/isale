@@ -23,9 +23,11 @@
 
           <v-divider></v-divider>
 
+          <v-btn depressed color="error" class="mt-4" v-if="step === 3" @click="$router.push('/')">Back to Home</v-btn>
+
           <v-card-actions>
 
-            <v-btn :disabled="step === 1" text @click="step--">Back</v-btn>
+            <v-btn :disabled="step === 1" text @click="step--" v-if="step === 1 || step === 2">Back</v-btn>
 
             <v-spacer></v-spacer>
 
@@ -43,7 +45,7 @@
               v-if="step === 2"
               color="error"
               depressed
-              :disabled="!deliveryDay && !deliveryTime"
+              :disabled="!deliveryDay || !deliveryTime || !deliveryNote"
               @click="placeOrder"
             >
               Confirm Order
@@ -96,7 +98,8 @@
       ...mapGetters({
         checkoutLocation: 'checkout/getCheckoutLocation',
         deliveryDay: 'checkout/getDeliveryDay',
-        deliveryTime: 'checkout/getDeliveryTime'
+        deliveryTime: 'checkout/getDeliveryTime',
+        deliveryNote: 'checkout/getDeliveryNote'
       }),
 
       currentTitle () {

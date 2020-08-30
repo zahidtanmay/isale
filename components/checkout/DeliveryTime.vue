@@ -1,37 +1,51 @@
 <template>
   <v-card-text>
 
-    <v-row>
+    <v-form
+      ref="form"
+      v-model="valid"
+    >
+      <v-row>
 
-      <v-col md="6">
-        <v-select
-          v-model="day"
-          :items="days"
-          item-text="state"
-          item-value="abbr"
-          label="Select Day"
+        <v-col md="6">
+          <v-select
+            v-model="day"
+            :items="days"
+            item-text="state"
+            item-value="abbr"
+            label="Select Day"
+            persistent-hint
+            return-object
+            single-line
+          ></v-select>
+        </v-col>
+
+        <v-col md="6">
+          <v-select
+            v-model="time"
+            :items="times"
+            item-text="title"
+            item-value="value"
+            label="Select Time"
+            persistent-hint
+            return-object
+            single-line
+          ></v-select>
+        </v-col>
+
+      </v-row>
+
+      <v-row>
+        <v-text-field
+          outlined
+          v-model="note"
+          label="Note"
+          :rules="[rules.required]"
           persistent-hint
-          return-object
-          single-line
-        ></v-select>
-      </v-col>
+        ></v-text-field>
+      </v-row>
 
-      <v-col md="6">
-        <v-select
-          v-model="time"
-          :items="times"
-          item-text="title"
-          item-value="value"
-          label="Select Time"
-          persistent-hint
-          return-object
-          single-line
-        ></v-select>
-      </v-col>
-
-    </v-row>
-
-
+    </v-form>
 
 
     <span class="caption grey--text text--darken-1">
@@ -46,6 +60,7 @@
     data: () => ({
       select: '',
       days: [],
+      valid: true,
       times: [
         {title: '9:00 AM - 10:00 AM', value: '9:00 AM - 10:00 AM'},
         { title: '10:00 AM - 11:00 AM', value: '10:00 AM - 11:00 AM' },
@@ -60,7 +75,10 @@
         { title: '7:00 PM - 8:00 PM', value: '7:00 PM - 8:00 PM' },
         { title: '8:00 PM - 9:00 PM', value: '8:00 PM - 9:00 PM' },
         { title: '9:00 PM - 10:00 PM', value: '9:00 PM - 10:00 PM' },
-        ]
+      ],
+      rules: {
+        required: value => !!value || 'Required.',
+      },
     }),
 
     computed: {
@@ -78,6 +96,16 @@
         },
         set(val) {
           this.$store.commit('checkout/SET_DELIVERY_DAY', val)
+        }
+      },
+
+      note: {
+        get() {
+          return this.$store.state.checkout.deliveryNote
+        },
+
+        set(val) {
+          this.$store.commit('checkout/SET_DELIVERY_NOTE', val)
         }
       }
     },

@@ -40,16 +40,33 @@
       <v-divider></v-divider>
 
       <v-card-text class="text-center">
-        <div>Subtotal: <v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.subTotal}}</div>
-        <div>Total: <v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.total}}</div>
-        <div>Paid Amount: <v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.paidAmount}}</div>
-        <div>Due Amount: <v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.dueAmount}}</div>
+        <v-row class="footer-info-row mt-4">
+          <v-col md="4" align="end">Subtotal:</v-col>
+          <v-col md="8"><v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.subTotal}}</v-col>
+        </v-row>
+
+        <v-row class="footer-info-row">
+          <v-col md="4" align="end">Total:</v-col>
+          <v-col md="8"><v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.total}}</v-col>
+        </v-row>
+
+        <v-row class="footer-info-row">
+          <v-col md="4" align="end">Paid:</v-col>
+          <v-col md="8"><v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.paidAmount}}</v-col>
+        </v-row>
+
+        <v-row class="footer-info-row">
+          <v-col md="4" align="end">Due:</v-col>
+          <v-col md="8"><v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.dueAmount}}</v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="12">
+            <v-btn block depressed @click="orderAgain">Order Again</v-btn>
+          </v-col>
+        </v-row>
+
       </v-card-text>
-
-
-
-
-
 
     </v-card>
 
@@ -63,19 +80,31 @@
   export default {
 
     name: 'OrderDetailsDialog',
+
     computed: {
       ...mapGetters({
         activeOrder: 'orders/getActiveOrder'
       }),
+
       dialog: {
+
         get () {
           return this.$store.state.component.orderDialog
         },
+
         set (val) {
           this.$store.commit('component/setOrderDialog', val)
         }
+
       }
+
     },
+
+    methods: {
+      orderAgain () {
+        this.$store.dispatch('cart/orderAgain', this.activeOrder.items)
+      }
+    }
 
   }
 </script>

@@ -19,7 +19,6 @@ export const mutations = {
 
   INCREMENT_CART_ITEM: (state, data) => {
     let item = data.item
-
     item.productId = item.id
     item.unitPrice = parseInt(item.price)
     item.purchasePrice = parseInt(item.price)
@@ -35,17 +34,46 @@ export const mutations = {
     state.cartItems = { ...state.cartItems, [item.id]: Vue._.cloneDeep(item) }
   },
 
+  ORDER_AGAIN: (state, data) => {
+    let quantity = 0
+    if(data.productId in state.cartItems) {
+      quantity = parseInt(state.cartItems[data.id].quantity)
+    }
+    let item = data
+    item.id = data.productId
+    item.unitPrice = parseInt(data.unitPrice)
+    item.purchasePrice = parseInt(data.unitPrice)
+    item.quantity = quantity + parseInt(data.quantity)
+    item.discount = parseInt(data.discount)
+
+    item.discountedPrice = item.discount > 0 ? item.unitPrice - item.discount : 0
+    item.totalDiscount = item.discount > 0 ? item.quantity * item.discount : 0
+
+    item.total = item.quantity * item.unitPrice
+    item.discountedTotal = item.total - item.totalDiscount
+
+    state.cartItems = { ...state.cartItems, [item.productId]: Vue._.cloneDeep(item) }
+  },
+
+
+
   DECREMENT_CART_ITEM: (state, data) => {
     let item = data.item
     if (data.quantity === 1) {
       Vue.delete(state.cartItems, item.id)
     } else {
       item.quantity = data.quantity - 1
+      item.totalDiscount = item.discount > 0 ? item.quantity * item.discount : 0
+
+      item.total = item.quantity * item.unitPrice
+      item.discountedTotal = item.total - item.totalDiscount
+
       state.cartItems = { ...state.cartItems, [item.id]: Vue._.cloneDeep(item) }
     }
   },
 
   DISCARD_CART_ITEM: (state, data) => {
+    console.log(data)
     Vue.delete(state.cartItems, data.id)
   },
 
@@ -101,6 +129,38 @@ export const actions = {
     await commit('DISCARD_CART_ITEM', data)
     await commit('CALCULATE_CART_COUNT')
     await commit('CALCULATE_CART_TOTAL')
+  },
+
+  async buyNow({commit, state}, data) {
+    if(data.quantity > 1) {
+      this.$router.push('/checkout')
+    } else {
+      await commit('INCREMENT_CART_ITEM', data)
+      await commit('CALCULATE_CART_COUNT')
+      await commit('CALCULATE_CART_TOTAL')
+      this.$router.push('/checkout')
+    }
+    await commit('component/setItemDetailsDialog', false, {root: true})
+  },
+
+  orderAgain({commit, state}, data) {
+    data.forEach(item => {
+      let quantity = parseInt(item.quantity)
+      if (quantity > 1) {
+        let i
+        for(i = 0; i < quantity; i++) {
+          console.log(item)
+          commit('ORDER_AGAIN', item)
+        }
+        commit('CALCULATE_CART_COUNT')
+        commit('CALCULATE_CART_TOTAL')
+      } else {
+        console.log(item)
+        commit('ORDER_AGAIN', item)
+        commit('CALCULATE_CART_COUNT')
+        commit('CALCULATE_CART_TOTAL')
+      }
+    })
   }
 
 }

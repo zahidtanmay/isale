@@ -17,7 +17,7 @@
               <v-list-item-subtitle>{{address.city}}, {{address.district}}, {{address.zip}}</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
-              <v-btn @click="setAddressDialog(address)" fab depressed small color="error"><v-icon>mdi-pencil</v-icon></v-btn>
+              <v-btn @click="setAddressDialog(address)" icon depressed small color="error"><v-icon>mdi-pencil</v-icon></v-btn>
             </v-list-item-action>
           </v-list-item>
 

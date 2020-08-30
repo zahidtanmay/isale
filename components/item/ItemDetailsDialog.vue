@@ -52,12 +52,19 @@
                 </v-btn>
               </v-col>
 
-              <v-col xs="5" class="py-0 text-center">{{item.quantity}}</v-col>
+              <v-col xs="6" class="py-0 text-center">{{item.quantity}}</v-col>
 
               <v-col xs="3" class="py-0">
                 <v-btn depressed small width="100%" @click="addToCart">
                   <v-icon>mdi-plus</v-icon>
                 </v-btn>
+              </v-col>
+
+            </v-row>
+
+            <v-row>
+              <v-col cols="12">
+                <v-btn block depressed @click="buyNow">Buy Now</v-btn>
               </v-col>
 
             </v-row>
@@ -109,6 +116,10 @@
       async removeFromCart () {
         await this.$store.dispatch('cart/removeFromCart', { item: this.item, quantity: this.item.quantity, cartPre: this.cartPre })
       },
+
+      async buyNow() {
+        await this.$store.dispatch('cart/buyNow', { item: this.item, quantity: this.item.quantity, cartPre: this.cartPre })
+      }
     }
 
   }
