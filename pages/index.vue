@@ -1,7 +1,10 @@
 <template>
   <v-container fluid>
 
-    <!--<LandingBanner/>-->
+    <no-ssr>
+      <LandingBanner/>
+    </no-ssr>
+
 
     <LandingCategories/>
 
@@ -11,7 +14,11 @@
       What Our Clients Saying
     </div>
 
-    <ClientsSaying/>
+
+    <no-ssr>
+      <ClientsSaying/>
+    </no-ssr>
+
 
     <Footer/>
 
