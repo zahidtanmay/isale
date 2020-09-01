@@ -1,7 +1,5 @@
 <template>
-  <v-col
-    :class="[$vuetify.breakpoint.name === 'xs' ? 'cat-s-i' : 'category-single-item']"
-  >
+  <v-col :class="[$vuetify.breakpoint.name === 'xs' ? 'cat-s-i' : 'category-single-item']">
 
     <v-hover>
       <template v-slot:default="{ hover }">

@@ -21,6 +21,7 @@
           link
           :to="category.slug"
           :key="category.name"
+          class="mb-1"
 
         >
           <v-list-item-title>{{category.name}}</v-list-item-title>
@@ -29,7 +30,7 @@
     </no-ssr>
 
 
-    <v-divider></v-divider>
+    <v-divider class="my-3"></v-divider>
 
     <no-ssr>
       <v-list
@@ -38,6 +39,7 @@
         v-for="(category, cat) in categories"
         :key="category.name"
         class="main-side-nav-list"
+        nav
       >
         <template v-if="category.subCategories && category.subCategories.length > 0">
 
@@ -203,7 +205,7 @@
 
 <style lang="scss">
 
-  .main-nav .v-navigation-drawer__content { margin-top: 12px !important; }
+  .main-nav .v-navigation-drawer__content { margin-top: 8px !important; }
 
   .main-side-nav-list { padding: 0 !important; }
 
@@ -215,12 +217,14 @@
 
   .sub-group-active .sub-group-title { font-weight: 700 !important; color: $nav-active-color; }
 
-  .sub-group-child { padding-left: 75px; }
+  .sub-group-child { padding-left: 30px !important; }
 
-  .single-sub-group { padding-left: 70px; }
+  .single-sub-group { padding-left: 30px !important; }
 
   .nav-active-icon { color: $nav-active-color !important; }
 
-  .main-nav-left-icon { margin-right: 6px !important; }
+  .main-nav-left-icon { margin-right: 6px !important; height: 16px !important;}
+
+  .v-list--dense .v-list-item { min-height: 30px !important; }
 
 </style>

@@ -1,7 +1,7 @@
 <template>
   <v-carousel
     cycle
-    height="250"
+    :height="$vuetify.breakpoint.name === 'xs' ? 400 : 250"
     show-arrows-on-hover
     hide-delimiter-background
     light
@@ -21,7 +21,7 @@
 
         </v-col>
         <v-col class="pa-0 my-auto" cols="12" md="9">
-          <div>
+          <div :class="[$vuetify.breakpoint.name === 'xs' ? 'mx-4' : '']">
             Congratulations for being nominated for 9th best entrepreneur among 500 new entrepreneurs by Forbes Magazine!!! I wish chaldal team the very best.. And your products types, brand types need to be extended more.
           </div>
         </v-col>

@@ -41,23 +41,23 @@
 
       <v-card-text class="text-center">
         <v-row class="footer-info-row mt-4">
-          <v-col md="4" align="end">Subtotal:</v-col>
-          <v-col md="8"><v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.subTotal}}</v-col>
+          <v-col md="8" align="end">Subtotal:</v-col>
+          <v-col md="4" align="start"><v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.subTotal}}</v-col>
         </v-row>
 
         <v-row class="footer-info-row">
-          <v-col md="4" align="end">Total:</v-col>
-          <v-col md="8"><v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.total}}</v-col>
+          <v-col md="8" align="end">Total:</v-col>
+          <v-col md="4" align="start"><v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.total}}</v-col>
         </v-row>
 
         <v-row class="footer-info-row">
-          <v-col md="4" align="end">Paid:</v-col>
-          <v-col md="8"><v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.paidAmount}}</v-col>
+          <v-col md="8" align="end">Paid:</v-col>
+          <v-col md="4" align="start"><v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.paidAmount}}</v-col>
         </v-row>
 
         <v-row class="footer-info-row">
-          <v-col md="4" align="end">Due:</v-col>
-          <v-col md="8"><v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.dueAmount}}</v-col>
+          <v-col md="8" align="end">Due:</v-col>
+          <v-col md="4" align="start"><v-icon small>mdi-currency-bdt</v-icon>{{activeOrder.dueAmount}}</v-col>
         </v-row>
 
         <v-row>

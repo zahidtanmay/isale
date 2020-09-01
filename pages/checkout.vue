@@ -5,7 +5,7 @@
 
     <v-row justify="center">
 
-      <v-col md="8">
+      <v-col cols="12">
 
         <v-card flat class="text-center">
 
@@ -113,8 +113,10 @@
 
     methods: {
       async placeOrder() {
-        await this.$store.dispatch('checkout/PlaceOrder')
-        this.step++
+        let r = await this.$store.dispatch('checkout/PlaceOrder')
+        if (r) {
+          this.step++
+        }
       }
     }
   }

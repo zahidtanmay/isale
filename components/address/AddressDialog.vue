@@ -92,7 +92,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="deep-purple lighten-2" text v-if="activeAddress.id" :disabled="!valid" @click="updateLocation">Update</v-btn>
-        <v-btn color="deep-purple lighten-2" text v-else @click="addLocation">Add</v-btn>
+        <v-btn color="deep-purple lighten-2" text :disabled="!valid" v-else @click="addLocation">Add</v-btn>
       </v-card-actions>
 
     </v-card>
@@ -167,7 +167,7 @@
           return this.$store.state.profile.activeAddress.areaId
         },
         set (val) {
-          this.location.areaId = val.id
+          this.location.areaId = val ? val.id : null
         }
       },
 
@@ -197,6 +197,17 @@
           this.location.district = val
         }
       },
+    },
+
+    watch: {
+      activeAddress (val){
+        if (Object.keys(val).length === 0) {
+          // console.log(this.$refs)
+          // this.$refs.form.reset()
+          this.$refs.form.resetValidation()
+        }
+      },
+
     },
 
     methods: {

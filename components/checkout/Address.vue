@@ -6,7 +6,7 @@
         <v-card-title>
           <v-list-item dense>
             <v-list-item-content>
-              <v-list-item-title>{{locations[selectedLocation].address1}}</v-list-item-title>
+              <v-list-item-title style="white-space: break-spaces;">{{locations[selectedLocation].address1}}</v-list-item-title>
               <v-list-item-subtitle>{{locations[selectedLocation].city}}, {{locations[selectedLocation].district}}, {{locations[selectedLocation].zip}}</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>

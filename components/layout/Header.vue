@@ -28,7 +28,7 @@
       <template v-if="loggedIn">
 
         <div><v-menu
-          bottom
+          offset-y
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn

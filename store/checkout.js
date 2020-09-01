@@ -38,6 +38,12 @@ export const actions = {
 
   async PlaceOrder ({commit, state, rootState}) {
 
+    let dateObject = new Date()
+    let datePart = dateObject.toDateString().split(' ')
+    let month = dateObject.getMonth()
+    month = month < 10 ? `0${month}` : month
+    let date = datePart[2] + '-' + month + '-' + datePart[3]
+
     let checkout = {}
 
     let checkoutItems = []
@@ -88,8 +94,8 @@ export const actions = {
 
     checkout.lessAmount = 0
     checkout.saleTypesId = 1
-    checkout.salesPersonId = '116'
-    checkout.salesDate = '5-5-2020'
+    checkout.salesPersonId = 1
+    checkout.salesDate = date
     checkout.discountCode = ''
 
     checkout.discountPercent = 0
@@ -98,10 +104,11 @@ export const actions = {
 
     checkout.paidAmount = 0
     checkout.returnAmount = 0
-    checkout.total = rootState.cart.cartTotalDiscount > 0 ? rootState.cart.cartDiscountedTotal : rootState.cart.cartTotal
+    checkout.total = rootState.cart.cartTotal
     checkout.dueAmount = checkout.total - checkout.paidAmount
     console.log(checkout)
 
+    let r
     try{
       let { data } = await this.$axios.post(`/orders`, JSON.stringify(checkout))
       commit('SET_ORDER_ID', data.data.id)
@@ -110,12 +117,13 @@ export const actions = {
       commit('SET_DELIVERY_DAY', null)
       commit('SET_DELIVERY_TIME', null)
       commit('SET_DELIVERY_NOTE', '')
+      r = true
     } catch (e) {
       console.log(e)
+      r = false
     }
 
-
-
+    return r
   }
 
 }

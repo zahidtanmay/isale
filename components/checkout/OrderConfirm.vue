@@ -46,33 +46,33 @@
           <v-card-text>
             <v-row class="footer-info-row mt-4">
               <v-col md="6" align="end">Subtotal:</v-col>
-              <v-col md="6"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['subTotal']}}</v-col>
+              <v-col md="6" align="start"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['subTotal']}}</v-col>
             </v-row>
             <template v-for="(ledger, index) in ledgers">
               <v-row class="footer-info-row">
                 <v-col md="6" align="end">{{ledger.name}}:</v-col>
-                <v-col md="6"><v-icon small>mdi-currency-bdt</v-icon>{{ledger.value}}</v-col>
+                <v-col md="6" align="start"><v-icon small>mdi-currency-bdt</v-icon>{{ledger.value}}</v-col>
               </v-row>
             </template>
 
             <v-row class="footer-info-row">
               <v-col md="6" align="end">Discount:</v-col>
-              <v-col md="6"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['discountTotal']}}</v-col>
+              <v-col md="6" align="start"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['discountTotal']}}</v-col>
             </v-row>
 
             <v-row class="footer-info-row">
               <v-col md="6" align="end">Total:</v-col>
-              <v-col md="6"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['total'] + checkoutDetails['ledgerTotal']}}</v-col>
+              <v-col md="6" align="start"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['total'] + checkoutDetails['ledgerTotal'] - checkoutDetails['discountTotal']}}</v-col>
             </v-row>
 
             <v-row class="footer-info-row">
               <v-col md="6" align="end">Paid:</v-col>
-              <v-col md="6"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['paidAmount'] + checkoutDetails['ledgerPaidTotal']}}</v-col>
+              <v-col md="6" align="start"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['paidAmount'] + checkoutDetails['ledgerPaidTotal']}}</v-col>
             </v-row>
 
             <v-row class="footer-info-row">
               <v-col md="6" align="end">Due:</v-col>
-              <v-col md="6"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['dueAmount'] + checkoutDetails['ledgerTotal']}}</v-col>
+              <v-col md="6" align="start"><v-icon small>mdi-currency-bdt</v-icon>{{checkoutDetails['dueAmount'] + checkoutDetails['ledgerTotal'] - checkoutDetails['discountTotal']}}</v-col>
             </v-row>
 
           </v-card-text>

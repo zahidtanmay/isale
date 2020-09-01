@@ -40,8 +40,7 @@ export const actions = {
       // await this.$auth.setToken('local', `Bearer ${data.data.token}`)
       return true
     } catch (e) {
-      console.log(e, e.response)
-      this.$toast.error('Oops...Something went wrong')
+      this.$toast.error(e.response.data.error.message)
       return false
     }
   },
@@ -61,7 +60,7 @@ export const actions = {
       return true
     } catch (e) {
       console.log(e, e.response)
-      this.$toast.error('Oops...Something went wrong')
+      this.$toast.error(e.response.data.error.message)
       return false
     }
   },
@@ -98,7 +97,7 @@ export const actions = {
       context.commit('component/setAddressDialog', false, { root: true })
     } catch (e) {
       console.log(e, e.response)
-      this.$toast.error('Oops...Something went wrong')
+      this.$toast.error(e.response.data.error.message)
     }
   }
 
