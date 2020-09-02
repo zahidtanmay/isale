@@ -28,8 +28,8 @@
             </v-card-title>
             <v-list-item dense>
               <v-list-item-content>
-                <v-list-item-title>{{checkoutDetails.deliveryDay}}</v-list-item-title>
-                <v-list-item-subtitle>{{checkoutDetails.deliveryTime.title}}</v-list-item-subtitle>
+                <v-list-item-title>{{checkoutDetails.deliveryDay}}day</v-list-item-title>
+                <v-list-item-subtitle>{{checkoutDetails.deliveryTime}}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-card>

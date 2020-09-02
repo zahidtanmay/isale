@@ -6,26 +6,18 @@
     hide-delimiters
   >
     <v-carousel-item
-      v-for="(slide, i) in slides"
+      v-for="(banner, i) in banners"
       :key="i"
-    >
-      <v-sheet
-        :color="colors[i]"
-        height="100%"
-      >
-        <v-row
-          class="fill-height"
-          align="center"
-          justify="center"
-        >
-          <div class="display-3">{{ slide }}</div>
-        </v-row>
-      </v-sheet>
+      :src="banner"
+      reverse-transition="fade-transition"
+      transition="fade-transition">
     </v-carousel-item>
   </v-carousel>
 </template>
 
 <script>
+
+  import {mapGetters} from 'vuex'
   export default {
     data () {
       return {
@@ -44,6 +36,12 @@
           'Vegetables',
         ],
       }
+    },
+
+    computed: {
+      ...mapGetters({
+        banners: 'bootstrap/getBanners'
+      })
     },
 
     mounted(){

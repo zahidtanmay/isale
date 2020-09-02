@@ -6,13 +6,13 @@
       v-model="valid"
     >
       <v-row>
-
         <v-col md="6">
+
           <v-select
             v-model="day"
-            :items="days"
-            item-text="state"
-            item-value="abbr"
+            :items="slots"
+            item-text="day"
+            item-value="day"
             label="Select Day"
             persistent-hint
             return-object
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
   export default {
     name: 'DeliveryTime',
     data: () => ({
@@ -62,19 +63,19 @@
       days: [],
       valid: true,
       times: [
-        {title: '9:00 AM - 10:00 AM', value: '9:00 AM - 10:00 AM'},
-        { title: '10:00 AM - 11:00 AM', value: '10:00 AM - 11:00 AM' },
-        { title: '11:00 AM - 12:00 PM', value: '11:00 AM - 12:00 PM' },
-        { title: '12:00 PM - 1:00 PM', value: '12:00 PM - 1:00 PM' },
-        { title: '1:00 PM - 2:00 PM', value: '1:00 PM - 2:00 PM' },
-        { title: '2:00 PM - 3:00 PM', value: '2:00 PM - 3:00 PM' },
-        { title: '3:00 PM - 4:00 PM', value: '3:00 PM - 4:00 PM' },
-        { title: '4:00 PM - 5:00 PM', value: '4:00 PM - 5:00 PM' },
-        { title: '5:00 PM - 6:00 PM', value: '5:00 PM - 6:00 PM' },
-        { title: '6:00 PM - 7:00 PM', value: '6:00 PM - 7:00 PM' },
-        { title: '7:00 PM - 8:00 PM', value: '7:00 PM - 8:00 PM' },
-        { title: '8:00 PM - 9:00 PM', value: '8:00 PM - 9:00 PM' },
-        { title: '9:00 PM - 10:00 PM', value: '9:00 PM - 10:00 PM' },
+        // {title: '9:00 AM - 10:00 AM', value: '9:00 AM - 10:00 AM'},
+        // { title: '10:00 AM - 11:00 AM', value: '10:00 AM - 11:00 AM' },
+        // { title: '11:00 AM - 12:00 PM', value: '11:00 AM - 12:00 PM' },
+        // { title: '12:00 PM - 1:00 PM', value: '12:00 PM - 1:00 PM' },
+        // { title: '1:00 PM - 2:00 PM', value: '1:00 PM - 2:00 PM' },
+        // { title: '2:00 PM - 3:00 PM', value: '2:00 PM - 3:00 PM' },
+        // { title: '3:00 PM - 4:00 PM', value: '3:00 PM - 4:00 PM' },
+        // { title: '4:00 PM - 5:00 PM', value: '4:00 PM - 5:00 PM' },
+        // { title: '5:00 PM - 6:00 PM', value: '5:00 PM - 6:00 PM' },
+        // { title: '6:00 PM - 7:00 PM', value: '6:00 PM - 7:00 PM' },
+        // { title: '7:00 PM - 8:00 PM', value: '7:00 PM - 8:00 PM' },
+        // { title: '8:00 PM - 9:00 PM', value: '8:00 PM - 9:00 PM' },
+        // { title: '9:00 PM - 10:00 PM', value: '9:00 PM - 10:00 PM' },
       ],
       rules: {
         required: value => !!value || 'Required.',
@@ -82,6 +83,9 @@
     }),
 
     computed: {
+      ...mapGetters({
+        slots: 'checkout/getDeliverySlots'
+      }),
       time: {
         get() {
           return this.$store.state.checkout.deliveryTime
@@ -95,7 +99,11 @@
           return this.$store.state.checkout.deliveryDay
         },
         set(val) {
-          this.$store.commit('checkout/SET_DELIVERY_DAY', val)
+          val.slots.forEach(day => {
+            this.times.push(day.start + ' - ' + day.end)
+          })
+
+          this.$store.commit('checkout/SET_DELIVERY_DAY', val.day)
         }
       },
 

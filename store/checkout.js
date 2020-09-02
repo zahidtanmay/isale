@@ -5,7 +5,8 @@ export const state = () => ({
   deliveryTime: null,
   deliveryNote: '',
   orderId: null,
-  checkoutDetails: {}
+  checkoutDetails: {},
+  deliverySlots: []
 })
 
 export const getters = {
@@ -15,7 +16,8 @@ export const getters = {
   getDeliveryTime: state => state.deliveryTime,
   getDeliveryNote: state => state.deliveryNote,
   getOrderId: state => state.orderId,
-  getCheckoutDetails: state => state.checkoutDetails
+  getCheckoutDetails: state => state.checkoutDetails,
+  getDeliverySlots: state => state.deliverySlots
 }
 
 export const mutations = {
@@ -25,7 +27,8 @@ export const mutations = {
   SET_DELIVERY_TIME: (state, value) => { state.deliveryTime = value },
   SET_DELIVERY_NOTE: (state, value) => { state.deliveryNote = value },
   SET_ORDER_ID: (state, value) => { state.orderId = value },
-  SET_CHECKOUT_DETAILS: (state, value) => { state.checkoutDetails = value }
+  SET_CHECKOUT_DETAILS: (state, value) => { state.checkoutDetails = value },
+  SET_DELIVERY_SLOTS: (state, value) => { state.deliverySlots = value }
 }
 
 export const actions = {
@@ -34,6 +37,11 @@ export const actions = {
     let { data } = await this.$axios.get(`/ledgers?cols=*`)
     context.commit('SET_LEDGERS', [])
     context.commit('SET_LEDGERS', data.data)
+  },
+
+  async fetchDeliverySlots (context) {
+    let { data } = await this.$axios.get(`/delivery-slots?cols=*`)
+    context.commit('SET_DELIVERY_SLOTS', data.data)
   },
 
   async PlaceOrder ({commit, state, rootState}) {
@@ -111,7 +119,7 @@ export const actions = {
     let r
     try{
       let { data } = await this.$axios.post(`/orders`, JSON.stringify(checkout))
-      commit('SET_ORDER_ID', data.data.id)
+      commit('SET_ORDER_ID', data.data.invoiceId)
       commit('SET_CHECKOUT_DETAILS', checkout)
       commit('cart/RESET_CART', null, { root: true })
       commit('SET_DELIVERY_DAY', null)

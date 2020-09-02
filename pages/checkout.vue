@@ -87,6 +87,7 @@
       store.dispatch('checkout/fetchLedgers')
       store.dispatch('profile/fetchLocations')
       store.dispatch('bootstrap/fetchAreas')
+      store.dispatch('checkout/fetchDeliverySlots')
     },
 
     data: () => ({

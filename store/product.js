@@ -2,12 +2,14 @@ export const state = () => ({
   products: [],
   deals: [],
   activeProduct: {},
+  banners: []
 })
 
 export const getters = {
   getProducts: state => state.products,
   getDeals: state => state.deals,
-  getActiveProduct: state => state.activeProduct
+  getActiveProduct: state => state.activeProduct,
+  getBanners: state => state.banners
 }
 
 export const mutations = {
@@ -41,7 +43,9 @@ export const mutations = {
 
     item.customFields = convertedCustomFields
     state.activeProduct = Object.assign({}, item)
-  }
+  },
+
+  SET_BANNERS: (state, value) => { state.banners = value }
 }
 
 export const actions = {
@@ -75,6 +79,8 @@ export const actions = {
 
     let {data} = await this.$axios.get(`products?cols=*&filters=${filter}`)
     commit('SET_PRODUCTS', data.data)
+    console.log(data.meta.topBanners)
+    commit('SET_BANNERS', data.meta.topBanners)
   },
 
   async fetchDeals({commit}, value) {

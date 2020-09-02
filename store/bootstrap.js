@@ -5,7 +5,9 @@ export const state = () => ({
   customCategories: [],
   company: {},
   areas: [],
-  customFields: {}
+  customFields: {},
+  banners: [],
+  reviews: []
 })
 
 export const getters = {
@@ -14,7 +16,9 @@ export const getters = {
   getAreas: state => state.areas,
   getAppVersion: state => state.version,
   getCustomFields: state => state.customFields,
-  getCustomCategories: state => state.customCategories
+  getCustomCategories: state => state.customCategories,
+  getBanners: state => state.banners,
+  getReviews: state => state.reviews
 }
 
 export const mutations = {
@@ -29,7 +33,10 @@ export const mutations = {
       }
       state.customFields = { ...state.customFields, [field.name]: Vue._.cloneDeep(field) }
     })
-  }
+  },
+
+  SET_BANNERS: (state, value) => { state.banners = value },
+  SET_REVIEWS: (state, value) => { state.reviews = value }
 
 }
 
@@ -39,6 +46,8 @@ export const actions = {
     let { data } = await this.$axios.get('/layout')
     context.commit('SET_CATEGORIES', data.data.categories)
     context.commit('SET_COMPANY', data.data.company)
+    context.commit('SET_BANNERS', data.meta.topBanners)
+    context.commit('SET_REVIEWS', data.data.reviews)
   },
 
   async fetchVersion (context) {
