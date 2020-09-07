@@ -5,6 +5,9 @@
     </div>
 
     <v-row justify="center">
+
+      <no-ssr>
+
       <v-col
         v-for="category in categories"
         :key="category.name"
@@ -23,6 +26,14 @@
         </v-card>
       </v-col>
 
+        <template slot="placeholder">
+          <v-skeleton-loader
+                ref="skeleton"
+                type="list-item"
+              ></v-skeleton-loader>
+        </template>
+
+      </no-ssr>
     </v-row>
   </div>
 </template>
@@ -32,6 +43,10 @@
 
   export default {
     name: 'LandingCategories',
+
+    data: () => ({
+      inject: ['theme'],
+    }),
 
     computed: {
       ...mapGetters({

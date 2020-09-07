@@ -3,21 +3,28 @@
 
     <no-ssr>
       <Header/>
+
+      <template slot="placeholder">
+        <place-holder-header></place-holder-header>
+      </template>
     </no-ssr>
 
 
     <no-ssr>
       <nav-bar></nav-bar>
+
+      <template slot="placeholder">
+        <place-holder-nav-bar></place-holder-nav-bar>
+      </template>
+    </no-ssr>
+
+    <no-ssr>
+      <cart-drawer></cart-drawer>
     </no-ssr>
 
 
-    <cart-drawer></cart-drawer>
-
     <v-main>
-      <!--<no-ssr>-->
         <nuxt/>
-      <!--</no-ssr>-->
-
     </v-main>
 
     <speed-dial></speed-dial>
@@ -27,7 +34,11 @@
 
 <script>
   import Header from '~/components/layout/Header.vue'
+  import PlaceHolderHeader from '~/components/placeholder/PlaceholderHeader.vue'
+
   import NavBar from '~/components/layout/NavBar.vue'
+  import PlaceHolderNavBar from '~/components/placeholder/PlaceHolderNavbar.vue'
+
   import SpeedDial from '~/components/layout/SpeedDial.vue'
   import CartDrawer from '~/components/layout/CartDrawer.vue'
 
@@ -42,7 +53,9 @@
       Header,
       NavBar,
       SpeedDial,
-      CartDrawer
+      CartDrawer,
+      PlaceHolderHeader,
+      PlaceHolderNavBar
     },
 
     mounted(){

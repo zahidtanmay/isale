@@ -19,24 +19,8 @@
 
   import {mapGetters} from 'vuex'
   export default {
-    data () {
-      return {
-        colors: [
-          'indigo',
-          'warning',
-          'pink darken-2',
-          'red lighten-1',
-          'deep-purple accent-4',
-        ],
-        slides: [
-          'Food',
-          'Baby Care',
-          'Grocery',
-          'Fish',
-          'Vegetables',
-        ],
-      }
-    },
+    data: () => ({
+    }),
 
     computed: {
       ...mapGetters({

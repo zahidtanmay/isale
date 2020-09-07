@@ -3,8 +3,14 @@
 
     <no-ssr>
       <LandingBanner/>
-    </no-ssr>
 
+      <template slot="placeholder">
+        <v-skeleton-loader
+          height="300"
+          type="image"
+        ></v-skeleton-loader>
+      </template>
+    </no-ssr>
 
     <LandingCategories/>
 
@@ -17,6 +23,8 @@
 
     <no-ssr>
       <ClientsSaying/>
+
+
     </no-ssr>
 
 
@@ -27,7 +35,6 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
   import LandingBanner from '~/components/landing/LandingBanner'
   import LandingCategories from '~/components/landing/LandingCategories'
   import LandingExplore from '~/components/landing/LandingExplore'
@@ -37,6 +44,10 @@
   export default {
     name: 'Dashboard',
     auth: false,
+
+    data: () => ({
+      inject: ['theme'],
+    }),
 
     components: {
       LandingBanner,
@@ -56,12 +67,8 @@
       }
     },
 
-    async middleware({ store, redirect, route }) {
-      await store.dispatch('product/fetchDeals')
-    },
-
     mounted(){
-      // console.log('landing index')
+      this.$store.dispatch('product/fetchDeals')
     },
 
 

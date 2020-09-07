@@ -12,11 +12,7 @@
           width="80px"
           class="mx-8"
         ></v-img>
-        <!--<span class="title ml-3 mr-5">E&nbsp;<span class="font-weight-light">Shop</span></span>-->
       </nuxt-link>
-
-
-
 
       <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search"></v-text-field>
 

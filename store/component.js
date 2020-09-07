@@ -1,7 +1,7 @@
 export const state = () => ({
   navDrawer: true,
   loginDialog: false,
-  cartDrawer: false,
+  cartDrawer: null,
   itemDetailsDialog: false,
   orderDialog: false,
   addressDialog: false,

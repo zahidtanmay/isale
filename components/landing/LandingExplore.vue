@@ -19,30 +19,6 @@
           :key="n"
           v-slot:default="{ active, toggle }"
         >
-
-          <!--<v-card-->
-            <!--outlined-->
-            <!--class="text-center mx-2"-->
-            <!--nuxt-->
-            <!--to="/discount1-cf"-->
-            <!--hover-->
-            <!--ripple-->
-            <!--width="200"-->
-            <!--height="300"-->
-          <!--&gt;-->
-
-            <!--<v-card-title class="text-center" justify="center">-->
-              <!--<span class="headline font-weight-light">{{deal.name}}</span>-->
-              <!--<v-spacer></v-spacer>-->
-
-            <!--</v-card-title>-->
-
-            <!--<v-card-text>-->
-              <!--<v-img src="https://static.carfromjapan.com/d6f08b8d-2977-4fba-8a01-353889bf71c9">-->
-
-              <!--</v-img>-->
-            <!--</v-card-text>-->
-          <!--</v-card>-->
           <single-item :key="`deal-${n}`" :itemDetails="deal"></single-item>
         </v-slide-item>
       </v-slide-group>

@@ -15,13 +15,7 @@
 
     </v-list>
 
-
-    <!--<template v-slot:append>-->
-
-      <CartDrawerBottom/>
-
-    <!--</template>-->
-
+    <CartDrawerBottom/>
 
   </v-navigation-drawer>
 

@@ -12,7 +12,6 @@
           gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
           height="200px"
         >
-          <!--<v-card-title>{{$route.params.category}}</v-card-title>-->
         </v-img>
       </v-card>
     </v-col>
