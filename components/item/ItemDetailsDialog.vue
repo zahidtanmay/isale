@@ -47,7 +47,7 @@
             <v-row class="mb-4">
 
               <v-col xs="3" class="py-0">
-                <v-btn depressed small width="100%" @click="removeFromCart">
+                <v-btn depressed small width="100%" @click="removeFromCart" :disabled="item.quantity <= 0">
                   <v-icon>mdi-minus</v-icon>
                 </v-btn>
               </v-col>

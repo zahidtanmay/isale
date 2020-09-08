@@ -86,8 +86,17 @@
 
 
 <style>
-  .footer-info-row .col {
+  .footer-info-row .col:first-child {
     padding: 0 !important;
+    /*line-height: 1px !important;*/
+  }
+
+  .footer-info-row .col:nth-child(2) {
+    padding-left: 10px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-right: 0 !important;
+
     /*line-height: 1px !important;*/
   }
 </style>

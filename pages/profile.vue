@@ -30,8 +30,8 @@
     }),
 
     async middleware({ store, redirect }) {
-      store.dispatch('profile/fetchLocations')
-      store.dispatch('bootstrap/fetchAreas')
+      await store.dispatch('profile/fetchLocations')
+      await store.dispatch('bootstrap/fetchAreas')
     },
 
     components: {

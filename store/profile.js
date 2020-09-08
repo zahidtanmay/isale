@@ -23,7 +23,7 @@ export const actions = {
 
   async sendOtp (context, number) {
     try {
-      let { data } = await this.$axios.post('send-otp', JSON.stringify({ mobile: `880${number}` }))
+      let { data } = await this.$axios.post('send-otp', JSON.stringify({ mobile: `0${number}` }))
       this.$toast.success(data.message)
       return true
     } catch (e) {

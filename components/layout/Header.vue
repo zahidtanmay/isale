@@ -1,27 +1,28 @@
 <template>
 
   <v-app-bar app clipped-left clipped-right flat class="main-nav-bar">
-      <v-app-bar-nav-icon @click="setNavDrawer"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click="setNavDrawer"></v-app-bar-nav-icon>
 
 
-      <nuxt-link to="/" class="main-logo black--text">
-        <v-img
-          :src="company.logo"
-          contain
-          max-height="60px"
-          width="80px"
-          class="mx-8"
-        ></v-img>
-      </nuxt-link>
+    <nuxt-link to="/" class="main-logo black--text">
+      <v-img
+        :src="company.logo"
+        contain
+        max-height="60px"
+        width="80px"
+        class="mx-8"
+      ></v-img>
+    </nuxt-link>
 
-      <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search"></v-text-field>
+    <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search"></v-text-field>
 
-      <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
 
-      <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
 
 
-      <template v-if="loggedIn">
+    <no-ssr>
+      <template v-if="this.$auth.loggedIn">
 
         <div><v-menu
           offset-y
@@ -53,7 +54,10 @@
         <v-btn icon @click="setLoginDialog" class="d-md-none"><v-icon>mdi-login</v-icon></v-btn>
       </template>
 
-      <login-dialog></login-dialog>
+      <template slot="placeholder"><v-btn depressed></v-btn></template>
+    </no-ssr>
+
+    <login-dialog></login-dialog>
 
   </v-app-bar>
 </template>
@@ -80,14 +84,6 @@
         company: 'bootstrap/getCompanyDetails',
         drawer: 'component/getNavDrawer',
       }),
-
-      loggedIn() {
-        return this.$auth.loggedIn
-      },
-
-      user() {
-        return this.$auth.user
-      }
     },
 
     methods: {

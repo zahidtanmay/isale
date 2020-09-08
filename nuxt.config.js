@@ -123,7 +123,7 @@ export default {
   },
 
   router: {
-    middleware: ['auth'],
+    middleware: ['auth', 'bootstrap'],
     linkActiveClass: 'active-link',
     linkExactActiveClass: 'exact-active-link',
   },

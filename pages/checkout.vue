@@ -83,7 +83,6 @@
     },
 
     middleware({ store, redirect }) {
-
       store.dispatch('checkout/fetchLedgers')
       store.dispatch('profile/fetchLocations')
       store.dispatch('bootstrap/fetchAreas')

@@ -33,8 +33,8 @@
   export default {
     name: 'MyOrders',
 
-    middleware({ store, redirect }) {
-      store.dispatch('orders/fetchOrders')
+    async middleware({ store, redirect }) {
+      await store.dispatch('orders/fetchOrders')
     },
 
     computed: {

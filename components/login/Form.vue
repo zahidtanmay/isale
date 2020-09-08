@@ -104,7 +104,7 @@
       },
 
       verify() {
-        let r = this.$store.dispatch('profile/verifyOtp', { mobile: `880${this.mobile}`, otp: this.otp })
+        let r = this.$store.dispatch('profile/verifyOtp', { mobile: `0${this.mobile}`, otp: this.otp })
         if(r) {
           this.val = 0
           clearInterval(this.interval)

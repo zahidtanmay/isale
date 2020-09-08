@@ -56,7 +56,7 @@
 
             <template slot="activator">
               <v-list-item-icon class="main-nav-left-icon">
-                <v-icon>{{ `mdi-${category.icon}` }}</v-icon>
+                <v-icon small>{{ `mdi-${category.icon}` }}</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>{{category.name}}</v-list-item-title>
@@ -109,7 +109,7 @@
                   class="single-sub-group"
                 >
                   <v-list-item-icon class="main-nav-left-icon">
-                    <v-icon>{{ `mdi-${subCategory.icon}` }}</v-icon>
+                    <v-icon small>{{ `mdi-${subCategory.icon}` }}</v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="subCategory.name">
@@ -131,7 +131,7 @@
           <v-list-item link :to="category.name" :key="category.name">
             <!--@click="routeLink(cat)"-->
             <v-list-item-icon class="main-nav-left-icon">
-              <v-icon>{{ `mdi-${category.icon}` }}</v-icon>
+              <v-icon small>{{ `mdi-${category.icon}` }}</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>{{category.name}}</v-list-item-title>

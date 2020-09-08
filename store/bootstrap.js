@@ -27,11 +27,19 @@ export const mutations = {
   SET_AREAS: (state, value) => { state.areas = value },
   SET_VERSION: (state, value) => { state.version = value },
   SET_CUSTOM_FIELDS: (state, value) => {
+    state.customFields = Object.assign({}, {})
+    state.customCategories = []
+
     value.forEach(field => {
+
       if(parseInt(field.typeId) === 3 || parseInt(field.typeId) === 4) {
         state.customCategories.push(field)
       }
-      state.customFields = { ...state.customFields, [field.name]: Vue._.cloneDeep(field) }
+
+      if (!(field.name in state.customFields)) {
+        state.customFields = { ...state.customFields, [field.name]: field }
+      }
+
     })
   },
 
@@ -42,31 +50,31 @@ export const mutations = {
 
 export const actions = {
 
-  async fetchLayout (context) {
+  async fetchLayout ({commit}) {
     let { data } = await this.$axios.get('/layout')
-    context.commit('SET_CATEGORIES', data.data.categories)
-    context.commit('SET_COMPANY', data.data.company)
-    context.commit('SET_BANNERS', data.meta.topBanners)
-    context.commit('SET_REVIEWS', data.data.reviews)
+    commit('SET_CATEGORIES', data.data.categories)
+    commit('SET_COMPANY', data.data.company)
+    commit('SET_BANNERS', data.meta.topBanners)
+    commit('SET_REVIEWS', data.data.reviews)
   },
 
-  async fetchVersion (context) {
+  async fetchVersion ({commit}) {
     let { data } = await this.$axios.get('/version')
     const version = data.data.version
-    context.commit('SET_VERSION', version)
+    commit('SET_VERSION', version)
     localStorage.setItem('e-shop-version', version)
     return version
   },
 
-  async fetchCustomFields (context) {
+  async fetchCustomFields ({commit}) {
     let { data } = await this.$axios.get('/custom-fields?cols=*')
-    context.commit('SET_CUSTOM_FIELDS', data.data)
+    commit('SET_CUSTOM_FIELDS', data.data)
   },
 
-  async fetchAreas (context) {
+  async fetchAreas ({commit}) {
     const token = this.$auth.getToken('local')
     let { data } = await this.$axios.get(`/areas?cols=*&token=${token}`)
-    context.commit('SET_AREAS', data.data)
+    commit('SET_AREAS', data.data)
   }
 
 }

@@ -23,8 +23,6 @@
 
     <no-ssr>
       <ClientsSaying/>
-
-
     </no-ssr>
 
 
