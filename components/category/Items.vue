@@ -1,10 +1,24 @@
 <template>
   <v-container class="pa-4">
-    <v-row>
+
+    <v-row v-if="loader">
+      <template v-for="n in 6">
+        <v-skeleton-loader
+          class="mx-auto"
+          min-width="210"
+          max-width="300"
+          height="320"
+          type="card"
+        ></v-skeleton-loader>
+      </template>
+    </v-row>
+
+    <v-row align="center" justify="center" v-else>
       <template v-for="(item, i) in items">
         <single-item :key="i" :itemDetails="item"></single-item>
       </template>
     </v-row>
+
   <item-details-dialog></item-details-dialog>
   </v-container>
 </template>
@@ -16,10 +30,7 @@
 
   export default {
     name: 'ItemsList',
-
-    data: () => ({
-
-    }),
+    inject: ['theme'],
 
     components: {
       SingleItem,
@@ -28,16 +39,13 @@
 
     computed: {
       ...mapGetters({
-        items: 'product/getProducts'
+        items: 'product/getProducts',
+        loader: 'product/getLoader'
       })
     }
   }
 </script>
 
 <style scoped>
-  .item-overlay-button {
-
-  }
-
 
 </style>

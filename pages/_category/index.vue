@@ -1,24 +1,24 @@
 <template>
 
-    <v-container fluid>
+  <v-container fluid>
 
-      <v-row dense>
+    <v-row dense>
 
-        <v-col md="11">
+      <v-col md="11">
 
-          <banner></banner>
+        <banner></banner>
 
-          <bread-crumb></bread-crumb>
+        <bread-crumb></bread-crumb>
 
-          <category-title/>
+        <category-title/>
 
-          <Items/>
+        <Items/>
 
-        </v-col>
+      </v-col>
 
-      </v-row>
+    </v-row>
 
-    </v-container>
+  </v-container>
 
 </template>
 
@@ -27,6 +27,7 @@
   import BreadCrumb from '~/components/category/BreadCrumb.vue'
   import Items from '~/components/category/Items.vue'
   import CategoryTitle from '~/components/category/Title.vue'
+
   export default {
     name: 'CategoryRoot',
     auth: false,
@@ -56,9 +57,6 @@
       }
     },
 
-    data: () => ({
-    }),
-
     components: {
       Banner,
       BreadCrumb,
@@ -67,11 +65,7 @@
     },
 
     mounted() {
-
-    },
-
-    async middleware({ store, redirect, route }) {
-      await store.dispatch('product/fetchProduct', route.params.category)
+      this.$store.dispatch('product/fetchProduct', this.$route.params.category)
     }
   }
 </script>

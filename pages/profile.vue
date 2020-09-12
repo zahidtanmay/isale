@@ -25,13 +25,11 @@
   export default {
     name: 'YourProfile',
 
-    data: () => ({
+    title: 'Profile',
 
-    }),
-
-    async middleware({ store, redirect }) {
-      await store.dispatch('profile/fetchLocations')
-      await store.dispatch('bootstrap/fetchAreas')
+    mounted() {
+      this.$store.dispatch('profile/fetchLocations')
+      this.$store.dispatch('bootstrap/fetchAreas')
     },
 
     components: {

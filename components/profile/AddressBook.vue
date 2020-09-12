@@ -9,19 +9,33 @@
         </v-card-title>
         <v-divider></v-divider>
 
-        <template v-for="address in locations">
 
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>{{address.address1}}</v-list-item-title>
-              <v-list-item-subtitle>{{address.city}}, {{address.district}}, {{address.zip}}</v-list-item-subtitle>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-btn @click="setAddressDialog(address)" icon depressed small color="error"><v-icon>mdi-pencil</v-icon></v-btn>
-            </v-list-item-action>
-          </v-list-item>
-
+        <template v-if="loader">
+          <v-skeleton-loader
+            :loading="true"
+            height="94"
+            type="list-item-two-line"
+          >
+          </v-skeleton-loader>
         </template>
+
+        <template v-else>
+          <template v-for="address in locations">
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>{{address.address1}}</v-list-item-title>
+                <v-list-item-subtitle>{{address.city}}, {{address.district}}, {{address.zip}}</v-list-item-subtitle>
+              </v-list-item-content>
+              <v-list-item-action>
+                <v-btn @click="setAddressDialog(address)" icon depressed small color="error"><v-icon>mdi-pencil</v-icon></v-btn>
+              </v-list-item-action>
+            </v-list-item>
+
+          </template>
+        </template>
+
+
 
       </v-card>
     </v-col>
@@ -41,6 +55,7 @@
     computed: {
       ...mapGetters({
         locations: 'profile/getLocations',
+        loader: 'profile/getLoader'
       })
     },
 

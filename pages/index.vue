@@ -16,11 +16,6 @@
 
     <LandingExplore/>
 
-    <div class="headline text-center my-6">
-      What Our Clients Saying
-    </div>
-
-
     <no-ssr>
       <ClientsSaying/>
     </no-ssr>

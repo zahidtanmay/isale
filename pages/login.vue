@@ -1,13 +1,9 @@
 <template>
 
-    <v-row
-      justify="center"
-    >
+    <v-row justify="center">
       <v-card class="mt-4" flat>
         <login-form/>
       </v-card>
-
-
     </v-row>
 
 </template>

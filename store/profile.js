@@ -1,12 +1,14 @@
 import Vue from 'vue'
 export const state = () => ({
   locations: [],
-  activeAddress: {}
+  activeAddress: {},
+  loader: false
 })
 
 export const getters = {
   getLocations: state => state.locations,
-  getActiveAddress: state => state.activeAddress
+  getActiveAddress: state => state.activeAddress,
+  getLoader: state => state.loader
 }
 
 export const mutations = {
@@ -17,6 +19,7 @@ export const mutations = {
     Vue.set(state.locations, id, value)
   },
   SET_ACTIVE_ADDRESS: (state, value) => { state.activeAddress = value },
+  SET_LOADER: (state, value) => { state.loader = value }
 }
 
 export const actions = {
@@ -65,10 +68,12 @@ export const actions = {
     }
   },
 
-  async fetchLocations (context) {
+  async fetchLocations ({commit}) {
+    commit('SET_LOADER', true)
     let { data } = await this.$axios.get(`/locations?cols=*`)
-    context.commit('SET_LOCATIONS', [])
-    context.commit('SET_LOCATIONS', data.data)
+    commit('SET_LOCATIONS', [])
+    commit('SET_LOCATIONS', data.data)
+    commit('SET_LOADER', false)
   },
 
   async addLocation (context, location) {

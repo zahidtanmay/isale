@@ -47,14 +47,18 @@
       </v-row>
     </v-form>
 
-    <div class="my-2" v-if="val === 0">
-      <v-btn :disabled="!valid" x-large color="success" @click="sendOtp()">Login</v-btn>
-    </div>
+    <v-row align="center" justify="center">
+      <div class="my-2" v-if="val === 0">
+        <v-btn :disabled="!valid || loader" x-large color="success" @click="sendOtp()" :loading="loader">Login</v-btn>
+      </div>
 
-    <div class="my-2" v-if="val === 1">
-      <v-btn :disabled="!valid" x-large color="success" @click="verify()">Verify</v-btn>
-      <v-btn :disabled="timer !== 0" x-large color="success" @click="sendOtp()">Send Again ({{timer}})</v-btn>
-    </div>
+      <div class="my-2" v-if="val === 1">
+        <v-btn :disabled="!valid || loader" x-large color="success" @click="verify()" :loading="loader">Verify</v-btn>
+        <v-btn :disabled="timer !== 0 || loader" x-large color="success" @click="sendOtp()">Send Again ({{timer}})</v-btn>
+      </div>
+    </v-row>
+
+
 
 
   </v-container>
@@ -66,6 +70,7 @@
     name: 'LoginForm',
 
     data: () => ({
+      loader: false,
       valid: false,
       val: 0,
       mobile: '',
@@ -86,32 +91,32 @@
 
     }),
 
-    computed: {
-
-
-
-    },
-
     methods: {
       async sendOtp() {
+        this.loader = true
         await this.$refs.form.validate()
         let r = await this.$store.dispatch('profile/sendOtp', this.mobile)
         if (r) {
           this.val++
           this.startTimer()
         }
-
+        this.loader = false
       },
 
       verify() {
+        this.loader = true
         let r = this.$store.dispatch('profile/verifyOtp', { mobile: `0${this.mobile}`, otp: this.otp })
         if(r) {
-          this.val = 0
-          clearInterval(this.interval)
-          this.$store.commit('component/setLoginDialog', false)
-          this.otp = ''
-          this.mobile = ''
+          setTimeout(() => {
+            this.val = 0
+            clearInterval(this.interval)
+            this.$store.commit('component/setLoginDialog', false)
+            this.otp = ''
+            this.mobile = ''
+            this.loader = false
+          }, 3000)
         }
+
       },
 
       startTimer() {

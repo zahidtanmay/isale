@@ -2,14 +2,16 @@ export const state = () => ({
   products: [],
   deals: [],
   activeProduct: {},
-  banners: []
+  banners: [],
+  loader: false
 })
 
 export const getters = {
   getProducts: state => state.products,
   getDeals: state => state.deals,
   getActiveProduct: state => state.activeProduct,
-  getBanners: state => state.banners
+  getBanners: state => state.banners,
+  getLoader: state => state.loader
 }
 
 export const mutations = {
@@ -45,12 +47,14 @@ export const mutations = {
     state.activeProduct = Object.assign({}, item)
   },
 
-  SET_BANNERS: (state, value) => { state.banners = value }
+  SET_BANNERS: (state, value) => { state.banners = value },
+  SET_LOADER: (state, value) => { state.loader = value }
 }
 
 export const actions = {
 
   async fetchProduct ({commit}, value) {
+    commit('SET_LOADER', true)
     let filter = ''
     let currentNav = { categoryId: null, subCategoryId: null, childId: null }
 
@@ -74,6 +78,7 @@ export const actions = {
         currentNav.categoryId = null
 
       }
+
     }
     commit('nav/setCurrentNav', currentNav, { root: true })
 
@@ -81,6 +86,7 @@ export const actions = {
     commit('SET_PRODUCTS', data.data)
     console.log(data.meta.topBanners)
     commit('SET_BANNERS', data.meta.topBanners)
+    commit('SET_LOADER', false)
   },
 
   async fetchDeals({commit}, value) {

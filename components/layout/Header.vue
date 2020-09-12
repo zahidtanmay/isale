@@ -54,7 +54,7 @@
         <v-btn icon @click="setLoginDialog" class="d-md-none"><v-icon>mdi-login</v-icon></v-btn>
       </template>
 
-      <template slot="placeholder"><v-btn depressed></v-btn></template>
+      <template slot="placeholder"><v-btn depressed outlined color="amber" class="placeholder-btn"></v-btn></template>
     </no-ssr>
 
     <login-dialog></login-dialog>
@@ -127,4 +127,5 @@
 <style lang="scss">
   .main-logo { text-decoration: none; }
   .main-nav-bar { background-color: $nav-bar-color !important;border-color: $nav-bar-color !important; }
+  .place-holder-btn { color: $nav-bar-color !important; }
 </style>

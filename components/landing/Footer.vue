@@ -24,7 +24,7 @@
 
       </v-card-text>
 
-      <v-card-text class="white--text pt-0">
+      <v-card-text class="white--text pt-0 footer-content">
         <v-row>
           <v-col cols="12" md="8">{{company.about}}</v-col>
           <v-col cols="12" md="4" :class="[$vuetify.breakpoint.name === 'xs' ? 'mx-4' : '']">
@@ -99,4 +99,6 @@
 
     /*line-height: 1px !important;*/
   }
+
+  .footer-content { font-size: .85rem !important; font-weight: lighter !important; }
 </style>

@@ -19,59 +19,60 @@
 
           </v-col>
 
-          <v-col md="6"><v-card-text>
+          <v-col md="6">
+
+            <v-card-text>
+
+              <div class="headline mb-1 text-center">{{item.name}}</div>
+
+              <div class="text-center">
+                <template v-for="(field, fieldIndex) in customFields" >
+                  <span v-if="field.typeId == 2">{{field.name}}: {{field.convertedValue}}</span>
+                  <span v-if="field.typeId == 2 && fieldIndex < customFields.length - 1">, </span>
+                </template>
+              </div>
+
+              <div class="mb-4 text-center title" v-if="item.itemDetailsDiscount > 0">
+                <v-icon>mdi-currency-bdt</v-icon>
+                <span class="text-decoration-line-through error--text">{{item.price}}</span>
+                <span class="error--text">{{item.itemDetailsDiscountedPrice}}</span>
+                <v-chip class="ma-2" color="orange" label outlined>
+                  {{item.itemDetailsDiscount}} <v-icon>mdi-currency-bdt</v-icon> OFF
+                </v-chip>
+              </div>
+              <div class="mb-4 text-center title" v-else>
+                <v-icon>mdi-currency-bdt</v-icon>
+                <span class="error--text">{{item.price}}</span>
+              </div>
+
+              <v-row class="mb-4">
+
+                <v-col xs="3" class="py-0">
+                  <v-btn depressed small width="100%" @click="removeFromCart" :disabled="item.quantity <= 0">
+                    <v-icon>mdi-minus</v-icon>
+                  </v-btn>
+                </v-col>
+
+                <v-col xs="6" class="py-0 text-center">{{item.quantity}}</v-col>
+
+                <v-col xs="3" class="py-0">
+                  <v-btn depressed small width="100%" @click="addToCart">
+                    <v-icon>mdi-plus</v-icon>
+                  </v-btn>
+                </v-col>
+
+              </v-row>
+
+              <v-row>
+                <v-col cols="12">
+                  <v-btn block depressed @click="buyNow">Buy Now</v-btn>
+                </v-col>
+
+              </v-row>
 
 
-            <div class="headline mb-1 text-center">{{item.name}}</div>
-
-            <div class="text-center">
-              <template v-for="(field, fieldIndex) in item.customFields" >
-                <span v-if="field.typeId == 2">{{field.name}}: {{field.convertedValue}}</span>
-                <span v-if="field.typeId == 2 && fieldIndex < item.customFields.length - 1">, </span>
-              </template>
-            </div>
-
-            <div class="mb-4 text-center title" v-if="item.itemDetailsDiscount > 0">
-              <v-icon>mdi-currency-bdt</v-icon>
-              <span class="text-decoration-line-through error--text">{{item.price}}</span>
-              <span class="error--text">{{item.itemDetailsDiscountedPrice}}</span>
-              <v-chip class="ma-2" color="orange" label outlined>
-                {{item.itemDetailsDiscount}} <v-icon>mdi-currency-bdt</v-icon> OFF
-              </v-chip>
-            </div>
-            <div class="mb-4 text-center title" v-else>
-              <v-icon>mdi-currency-bdt</v-icon>
-              <span class="error--text">{{item.price}}</span>
-            </div>
-
-            <v-row class="mb-4">
-
-              <v-col xs="3" class="py-0">
-                <v-btn depressed small width="100%" @click="removeFromCart" :disabled="item.quantity <= 0">
-                  <v-icon>mdi-minus</v-icon>
-                </v-btn>
-              </v-col>
-
-              <v-col xs="6" class="py-0 text-center">{{item.quantity}}</v-col>
-
-              <v-col xs="3" class="py-0">
-                <v-btn depressed small width="100%" @click="addToCart">
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </v-col>
-
-            </v-row>
-
-            <v-row>
-              <v-col cols="12">
-                <v-btn block depressed @click="buyNow">Buy Now</v-btn>
-              </v-col>
-
-            </v-row>
-
-
-            <div class="item-details-description font-weight-thin">{{item.description}}</div>
-          </v-card-text>
+              <div class="item-details-description font-weight-thin">{{item.description}}</div>
+            </v-card-text>
           </v-col>
         </v-row>
       </v-container>
@@ -93,7 +94,7 @@
     computed: {
       ...mapGetters({
         item: 'product/getActiveProduct',
-        customFields: 'bootstrap/getCustomFields'
+        // customFields: 'bootstrap/getCustomFields'
       }),
 
       dialog: {
@@ -105,6 +106,13 @@
           this.$store.commit('component/setItemDetailsDialog', val)
         }
       },
+
+      customFields () {
+        let fields = this.item.customFields
+        console.log(fields)
+        fields = fields.filter(field => field.typeId == 2)
+        return fields
+      }
 
     },
 
@@ -120,7 +128,7 @@
       async buyNow() {
         await this.$store.dispatch('cart/buyNow', { item: this.item, quantity: this.item.quantity, cartPre: this.cartPre })
       }
-    }
+    },
 
   }
 </script>

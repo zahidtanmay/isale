@@ -8,15 +8,23 @@
     </v-row>
 
     <v-row justify="center">
-      <v-col md="8" v-if="orders.length > 0">
+
+      <v-col md="8" v-if="loader">
+
+        <v-skeleton-loader
+          :loading="true"
+          height="94"
+          type="list-item-two-line"
+        >
+        </v-skeleton-loader>
+      </v-col>
+
+      <v-col md="8" v-else>
         <template v-for="(order, index) in orders">
           <single-order :orderDetails="order" :orderIndex="index" />
         </template>
       </v-col>
 
-      <v-col v-else>
-        <div class="font-weight-light text-center mt-16" style="">No Orders Found</div>
-      </v-col>
     </v-row>
 
     <order-details-dialog/>
@@ -32,33 +40,18 @@
 
   export default {
     name: 'MyOrders',
+    title: 'Orders',
 
-    async middleware({ store, redirect }) {
-      await store.dispatch('orders/fetchOrders')
+    mounted() {
+      this.$store.dispatch('orders/fetchOrders')
     },
 
     computed: {
       ...mapGetters({
-        orders: 'orders/getOrders'
+        orders: 'orders/getOrders',
+        loader: 'orders/getLoader'
       })
     },
-
-    data: () => ({
-
-      // orders: [
-      //   {
-      //     id: 5,
-      //     status: 'cancelled',
-      //     amount: 120
-      //   },
-      //   {
-      //     id: 8,
-      //     status: 'pending',
-      //     amount: 450
-      //   }
-      // ]
-
-    }),
 
     components: {
       SingleOrder,

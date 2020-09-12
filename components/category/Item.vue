@@ -4,6 +4,9 @@
     <v-hover>
       <template v-slot:default="{ hover }">
         <v-card flat class="mx-auto" max-width="220px" height="320px">
+          <div class="ribbon ribbon-top-right" v-if="discount">
+            <span><v-icon small color="white">mdi-currency-bdt</v-icon> {{discount}} off</span>
+          </div>
           <v-img :src="itemDetails.imageUrl" width="210px" height="180px"></v-img>
 
           <v-card-text class="text-center">
@@ -11,7 +14,8 @@
             <div class="primary--text">{{itemDetails.unit}}</div>
             <div class="primary--text" v-if="discount > 0">
               <v-icon small>mdi-currency-bdt</v-icon> <span  class="text-decoration-line-through">{{itemDetails.price}}</span>
-              <span>{{parseInt(itemDetails.price) - discount}}</span></div>
+              <span>{{parseInt(itemDetails.price) - discount}}</span>
+            </div>
             <div class="primary--text" v-else><v-icon small>mdi-currency-bdt</v-icon> {{itemDetails.price}}</div>
           </v-card-text>
 
@@ -140,11 +144,67 @@
 </script>
 
 <style>
-  .category-single-item { max-width: 210px !important; }
-  .item-name-text { min-height: 32px;
+  .category-single-item { max-width: 220px !important; }
+  .item-name-text {
+    min-height: 32px;
     font-size: .8rem !important;
     font-weight: 400;
     letter-spacing: 0.03125em !important;
     line-height: 1rem;
   }
+
+  .ribbon {
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+  }
+
+  .ribbon::before,
+  .ribbon::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    display: block;
+    border: 5px solid #F9A825;
+  }
+  .ribbon span {
+    position: absolute;
+    display: block;
+    width: 225px;
+    padding: 7px 0;
+    background-color: #F9A825;
+    box-shadow: 0 2px 1px rgba(0,0,0,.1);
+    color: #fff;
+    font: 500 16px/1 'Lato', sans-serif;
+    text-shadow: 0 1px 1px rgba(0,0,0,.2);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* top right*/
+  .ribbon-top-right {
+    top: -10px;
+    right: -10px;
+  }
+  .ribbon-top-right::before,
+  .ribbon-top-right::after {
+    border-top-color: transparent;
+    border-right-color: transparent;
+  }
+  .ribbon-top-right::before {
+    top: 0;
+    left: 22px;
+  }
+  .ribbon-top-right::after {
+    bottom: 22px;
+    right: 0;
+  }
+  .ribbon-top-right span {
+    left: -27px;
+    top: 29px;
+    transform: rotate(45deg);
+  }
+
 </style>

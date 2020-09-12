@@ -10,12 +10,26 @@
       <cart-drawer></cart-drawer>
     </no-ssr>
 
-
-    <v-main>
-      <no-ssr>
+    <no-ssr>
+      <v-main>
         <nuxt/>
-      </no-ssr>
-    </v-main>
+      </v-main>
+
+      <template slot="placeholder">
+        <v-container class="fill-height">
+          <v-row align="center" justify="center" style="position: absolute; top: 50%;left: 50%;">
+            <v-progress-circular
+              class="text-center"
+              :size="72"
+              :width="6"
+              color="amber"
+              indeterminate
+            ></v-progress-circular>
+          </v-row>
+        </v-container>
+
+      </template>
+    </no-ssr>
 
     <no-ssr>
       <speed-dial></speed-dial>
