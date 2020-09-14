@@ -14,7 +14,7 @@
       ></v-img>
     </nuxt-link>
 
-    <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search" v-model="search" background-color="amber lighten-1" class="search-input"></v-text-field>
+    <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search" v-model="search" background-color="amber lighten-2" class="search-input"></v-text-field>
 
     <v-spacer></v-spacer>
 

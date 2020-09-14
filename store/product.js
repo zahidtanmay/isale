@@ -56,7 +56,7 @@ export const mutations = {
   SET_LOADER: (state, value) => { state.loader = value },
   SET_SEARCHED_PRODUCTS: (state, value) => { state.searchedProduct = value },
   SET_SLOADER: (state, value) => { state.searchLoader = value },
-  SET_KEYWORD: (state, value) => { console.log(value);state.keyword = value }
+  SET_KEYWORD: (state, value) => { state.keyword = value }
 }
 
 export const actions = {
@@ -104,7 +104,7 @@ export const actions = {
   async getSearchedProduct({commit, state}, value) {
     this.$router.push('/search')
     commit('SET_SLOADER', true)
-    let {data} = await this.$axios.get(`products?keyword=${value}&cols=*&page=1`)
+    let {data} = await this.$axios.get(`products?filters=keyword:${value}&cols=*&page=1`)
     commit('SET_SEARCHED_PRODUCTS', data.data)
     commit('SET_SLOADER', false)
   }

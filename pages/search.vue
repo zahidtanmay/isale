@@ -13,8 +13,13 @@
     </v-row>
 
     <v-row align="center" justify="center" v-else>
-      <template v-for="(item, i) in items">
-        <single-item :key="i" :itemDetails="item"></single-item>
+      <template v-if="items.length > 0">
+        <template v-for="(item, i) in items">
+          <single-item :key="i" :itemDetails="item"></single-item>
+        </template>
+      </template>
+      <template v-else>
+        No product found
       </template>
     </v-row>
 
