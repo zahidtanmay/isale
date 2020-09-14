@@ -108,8 +108,8 @@
       },
 
       customFields () {
-        let fields = this.item.customFields
-        console.log(fields)
+
+        let fields = this.item.customFields || []
         fields = fields.filter(field => field.typeId == 2)
         return fields
       }

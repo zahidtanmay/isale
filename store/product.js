@@ -3,7 +3,10 @@ export const state = () => ({
   deals: [],
   activeProduct: {},
   banners: [],
-  loader: false
+  loader: false,
+  searchedProduct: [],
+  searchLoader: false,
+  keyword: ''
 })
 
 export const getters = {
@@ -11,7 +14,9 @@ export const getters = {
   getDeals: state => state.deals,
   getActiveProduct: state => state.activeProduct,
   getBanners: state => state.banners,
-  getLoader: state => state.loader
+  getLoader: state => state.loader,
+  getSearchedProducts: state => state.searchedProduct,
+  getSLoader: state => state.searchLoader,
 }
 
 export const mutations = {
@@ -48,7 +53,10 @@ export const mutations = {
   },
 
   SET_BANNERS: (state, value) => { state.banners = value },
-  SET_LOADER: (state, value) => { state.loader = value }
+  SET_LOADER: (state, value) => { state.loader = value },
+  SET_SEARCHED_PRODUCTS: (state, value) => { state.searchedProduct = value },
+  SET_SLOADER: (state, value) => { state.searchLoader = value },
+  SET_KEYWORD: (state, value) => { console.log(value);state.keyword = value }
 }
 
 export const actions = {
@@ -59,6 +67,7 @@ export const actions = {
     let currentNav = { categoryId: null, subCategoryId: null, childId: null }
 
     let slug = value.split('-')
+    console.log('slug', slug)
     if (slug[slug.length - 1] && !isNaN(Number(slug[slug.length - 1]))) {
       const categoryId = slug.pop()
       const type = slug.pop()
@@ -76,15 +85,13 @@ export const actions = {
       } else {
         filter = `customFieldId:${id}`
         currentNav.categoryId = null
-
       }
 
     }
     commit('nav/setCurrentNav', currentNav, { root: true })
 
-    let {data} = await this.$axios.get(`products?cols=*&filters=${filter}`)
+    let {data} = await this.$axios.get(`products?cols=*&filters=${filter}&page=1`)
     commit('SET_PRODUCTS', data.data)
-    console.log(data.meta.topBanners)
     commit('SET_BANNERS', data.meta.topBanners)
     commit('SET_LOADER', false)
   },
@@ -92,5 +99,13 @@ export const actions = {
   async fetchDeals({commit}, value) {
     let {data} = await this.$axios.get(`products?cols=*`)
     commit('SET_DEALS', data.data)
+  },
+
+  async getSearchedProduct({commit, state}, value) {
+    this.$router.push('/search')
+    commit('SET_SLOADER', true)
+    let {data} = await this.$axios.get(`products?keyword=${value}&cols=*&page=1`)
+    commit('SET_SEARCHED_PRODUCTS', data.data)
+    commit('SET_SLOADER', false)
   }
 }

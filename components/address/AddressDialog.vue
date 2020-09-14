@@ -202,9 +202,9 @@
     watch: {
       activeAddress (val){
         if (Object.keys(val).length === 0) {
-          // console.log(this.$refs)
-          // this.$refs.form.reset()
-          this.$refs.form.resetValidation()
+          if (this.$refs.form) {
+            this.$refs.form.resetValidation()
+          }
         }
       },
 

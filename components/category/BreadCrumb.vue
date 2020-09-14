@@ -50,13 +50,16 @@
       },
 
       async setBread () {
-        const {categoryId, subCategoryId, childId} = this.currentNav
+        const categoryId = await this.currentNav.categoryId
+        const subCategoryId = await this.currentNav.subCategoryId
+        const childId = await this.currentNav.childId
+
         const categories = this.categories
         const cat = await categories.findIndex(category => parseInt(category.id) === categoryId)
-        const scat = cat >= 0 ? await categories[cat]['subCategories'].findIndex(category => parseInt(category.id) === subCategoryId) : -1
+        const scat = await cat >= 0 ? categories[cat]['subCategories'].findIndex(category => parseInt(category.id) === subCategoryId) : -1
         let parent = Object.assign({}, categories[cat])
         let bread = []
-        console.log(subCategoryId, scat)
+
         if (subCategoryId !=null && childId != null) {
           bread = [
             {
@@ -116,7 +119,7 @@
 
     watch: {
       currentNav (val) {
-        console.log('current nav watching', val)
+        this.setBread()
       }
     }
 

@@ -10,6 +10,7 @@ const route = async function({ app }) {
       } else {
         next()
       }
+
       //   console.log(to, from)
     })
 

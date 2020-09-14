@@ -26,9 +26,5 @@
         banners: 'bootstrap/getBanners'
       })
     },
-
-    mounted(){
-      console.log('landing banner')
-    },
   }
 </script>

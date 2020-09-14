@@ -14,7 +14,7 @@
       ></v-img>
     </nuxt-link>
 
-    <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search"></v-text-field>
+    <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search" v-model="search" background-color="amber lighten-1" class="search-input"></v-text-field>
 
     <v-spacer></v-spacer>
 
@@ -68,15 +68,12 @@
 
   export default {
     name: 'HeaderBar',
-
     data: () => ({
-
       sessions: [
         { 'title': 'Profile', 'link': 'profile' },
         { 'title': 'Orders', 'link': 'orders' },
         { 'title': 'Logout', 'link': 'logout' },
       ]
-
     }),
 
     computed: {
@@ -84,10 +81,19 @@
         company: 'bootstrap/getCompanyDetails',
         drawer: 'component/getNavDrawer',
       }),
+
+      search: {
+        get() {
+          return this.$store.state.product.keyword
+        },
+        set(val) {
+          this.$store.commit('product/SET_KEYWORD', val)
+          this.$store.dispatch('product/getSearchedProduct', val)
+        }
+      }
     },
 
     methods: {
-
       setNavDrawer() {
         this.$store.commit('component/setNavDrawer', !this.drawer)
       },
@@ -115,12 +121,6 @@
     components: {
       LoginDialog
     },
-
-    mounted(){
-      console.log('landing head')
-    },
-
-
   }
 </script>
 
@@ -128,4 +128,5 @@
   .main-logo { text-decoration: none; }
   .main-nav-bar { background-color: $nav-bar-color !important;border-color: $nav-bar-color !important; }
   .place-holder-btn { color: $nav-bar-color !important; }
+  .search-input { color: grey !important; }
 </style>

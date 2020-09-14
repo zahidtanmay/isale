@@ -44,9 +44,5 @@
       })
     },
 
-    mounted(){
-      console.log('landing cat')
-    },
-
   }
 </script>

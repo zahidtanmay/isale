@@ -45,9 +45,5 @@
       SingleItem,
       ItemDetailsDialog
     },
-
-    mounted(){
-      console.log('landing exp')
-    },
   }
 </script>
