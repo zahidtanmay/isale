@@ -2,6 +2,6 @@ import createPersistedState from 'vuex-persistedstate'
 
 export default ({store}) => {
   createPersistedState({
-    key: 'isale',
+    key: 'isale-v1.00000001',
   })(store)
 }

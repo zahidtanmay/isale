@@ -2,7 +2,7 @@
   <v-container class="pa-4">
 
     <v-row v-if="loader">
-      <template v-for="n in 6">
+      <template v-for="n in 12">
         <v-skeleton-loader
           class="mx-auto"
           min-width="210"

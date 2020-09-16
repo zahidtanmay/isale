@@ -12,7 +12,7 @@ const route = async function (context) {
 
   if (!process.server) {
 
-    if (context.from.name === 'search') {
+    if (context.from && context.from.name === 'search') {
       context.store.commit('product/SET_KEYWORD', '')
     }
 

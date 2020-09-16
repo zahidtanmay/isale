@@ -23,6 +23,7 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
   import Banner from '~/components/category/Banner.vue'
   import BreadCrumb from '~/components/category/BreadCrumb.vue'
   import Items from '~/components/category/Items.vue'
@@ -43,6 +44,12 @@
     },
 
     computed: {
+      ...mapGetters({
+        totalProducts: 'product/getTotalProducts',
+        currentTotal: 'product/getCurrentProductCount',
+        loader: 'product/getLoader',
+      }),
+
       route() {
         const route = this.$route.params.category
         let str = ''
@@ -65,7 +72,39 @@
     },
 
     mounted() {
-      this.$store.dispatch('product/fetchProduct', this.$route.params.category)
+      this.$store.dispatch('product/fetchProducts', this.$route.params.category)
+    },
+
+    methods: {
+      onScroll ({e}) {
+        if (this.bottomVisible() && this.currentTotal < this.totalProducts && !this.loader) {
+          this.$store.dispatch('product/loadMoreProducts', this.$route.params.category)
+        }
+      },
+
+      bottomVisible () {
+        const scrollY = window.scrollY
+        const visible = document.documentElement.clientHeight
+        let pageHeight = null
+        if (document.documentElement.clientWidth <= 800 && document.documentElement.clientHeight <= 600) {
+          pageHeight = document.documentElement.scrollHeight - 60
+        } else {
+          pageHeight = document.documentElement.scrollHeight
+        }
+
+        const bottomOfPage = visible + scrollY + 150 >= pageHeight
+        return bottomOfPage || pageHeight < visible
+      }
+    },
+
+
+
+    created () {
+      window.addEventListener('scroll', this.onScroll)
+    },
+
+    destroyed () {
+      window.removeEventListener('scroll', this.onScroll)
     }
   }
 </script>

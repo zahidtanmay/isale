@@ -6,7 +6,10 @@ export const state = () => ({
   loader: false,
   searchedProduct: [],
   searchLoader: false,
-  keyword: ''
+  keyword: '',
+  page: 1,
+  totalProducts: 0,
+  currentProductCount: 0
 })
 
 export const getters = {
@@ -17,6 +20,8 @@ export const getters = {
   getLoader: state => state.loader,
   getSearchedProducts: state => state.searchedProduct,
   getSLoader: state => state.searchLoader,
+  getTotalProducts: state => state.totalProducts,
+  getCurrentProductCount: state => state.currentProductCount,
 }
 
 export const mutations = {
@@ -41,7 +46,6 @@ export const mutations = {
         const id = prefValues.findIndex(value => parseInt(value.id) === parseInt(field.value))
         convertedField.convertedValue = prefValues[id]['value']
         convertedCustomFields.push(convertedField)
-        // console.log(field, customFields[field.name], prefValues, field.value, id, prefValues[id]['value'])
       } else {
         convertedField.convertedValue = convertedField.value
         convertedCustomFields.push(convertedField)
@@ -56,12 +60,19 @@ export const mutations = {
   SET_LOADER: (state, value) => { state.loader = value },
   SET_SEARCHED_PRODUCTS: (state, value) => { state.searchedProduct = value },
   SET_SLOADER: (state, value) => { state.searchLoader = value },
-  SET_KEYWORD: (state, value) => { state.keyword = value }
+  SET_KEYWORD: (state, value) => { console.log(value);state.keyword = value },
+  APPEND_PRODUCTS: (state, value) => { state.products = [ ...state.products, ...value ]},
+  RESET_PAGE: (state) => { state.page = 1 },
+  SET_TOTAL_PRODUCTS: (state, value) => { state.totalProducts = value },
+  SET_CURRENT_PRODUCT_COUNT: (state, value) => { state.currentProductCount += value },
+  RESET_CURRENT_PRODUCT_COUNT: (state, value) => { state.currentProductCount = value },
+  SET_PAGE: (state, value) => { state.page = value },
+
 }
 
 export const actions = {
 
-  async fetchProduct ({commit}, value) {
+  async fetchProducts ({commit}, value) {
     commit('SET_LOADER', true)
     let filter = ''
     let currentNav = { categoryId: null, subCategoryId: null, childId: null }
@@ -86,13 +97,15 @@ export const actions = {
         filter = `customFieldId:${id}`
         currentNav.categoryId = null
       }
-
     }
     commit('nav/setCurrentNav', currentNav, { root: true })
 
     let {data} = await this.$axios.get(`products?cols=*&filters=${filter}&page=1`)
-    commit('SET_PRODUCTS', data.data)
     commit('SET_BANNERS', data.meta.topBanners)
+    commit('SET_TOTAL_PRODUCTS', parseInt(data.meta.pagination.total))
+    commit('SET_PRODUCTS', data.data)
+    commit('RESET_CURRENT_PRODUCT_COUNT', data.data.length)
+    commit('RESET_PAGE')
     commit('SET_LOADER', false)
   },
 
@@ -107,5 +120,38 @@ export const actions = {
     let {data} = await this.$axios.get(`products?filters=keyword:${value}&cols=*&page=1`)
     commit('SET_SEARCHED_PRODUCTS', data.data)
     commit('SET_SLOADER', false)
+  },
+
+  async loadMoreProducts({commit, state, getters}, value) {
+    let nextPage = state.page + 1
+    commit('SET_LOADER', true)
+
+    let filter = ''
+    let slug = value.split('-')
+    if (slug[slug.length - 1] && !isNaN(Number(slug[slug.length - 1]))) {
+      const categoryId = slug.pop()
+      const type = slug.pop()
+      const subCategoryId = slug.pop()
+      filter = `subCategoryId:${subCategoryId}`
+    } else {
+      const type = slug.pop()
+      const id = slug.pop()
+      if(type === 'c') {
+        filter = `categoryId:${id}`
+      } else {
+        filter = `customFieldId:${id}`
+      }
+
+    }
+
+    let {data} = await this.$axios.get(`products?cols=*&filters=${filter}&page=${nextPage}`)
+    if (data.data.length > 0) {
+      commit('APPEND_PRODUCTS', data.data)
+      commit('SET_PAGE', nextPage)
+      commit('SET_CURRENT_PRODUCT_COUNT', data.data.length)
+    }
+
+    commit('SET_LOADER', false)
   }
 }
+

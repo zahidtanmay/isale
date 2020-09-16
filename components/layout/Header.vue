@@ -9,12 +9,18 @@
         :src="company.logo"
         contain
         max-height="60px"
-        width="80px"
-        class="mx-8"
+        :width="$vuetify.breakpoint.name === 'xs' ? '40px' : '80px'"
+        :class="$vuetify.breakpoint.name === 'xs' ? 'mx-3' : 'mx-8'"
       ></v-img>
     </nuxt-link>
 
-    <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search" v-model="search" background-color="amber lighten-2" class="search-input"></v-text-field>
+    <no-ssr>
+      <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search" v-model="search" background-color="amber lighten-2" class="search-input"></v-text-field>
+      <template slot="placeholder">
+        <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search" background-color="amber lighten-2" class="search-input"></v-text-field>
+      </template>
+    </no-ssr>
+
 
     <v-spacer></v-spacer>
 
