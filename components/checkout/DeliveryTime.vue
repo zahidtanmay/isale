@@ -11,7 +11,7 @@
           <v-select
             v-model="day"
             :items="slots"
-            item-text="day"
+            item-text="label"
             item-value="day"
             label="Select Day"
             persistent-hint
@@ -100,6 +100,7 @@
         },
         set(val) {
           val.slots.forEach(day => {
+            this.time = null
             this.times.push(day.start + ' - ' + day.end)
           })
 

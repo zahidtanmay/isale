@@ -71,8 +71,13 @@
       CategoryTitle
     },
 
-    mounted() {
-      this.$store.dispatch('product/fetchProducts', this.$route.params.category)
+    async mounted() {
+      await this.$store.dispatch('product/fetchProducts', this.$route.params.category)
+      while(!this.scrollCheck() && this.currentTotal !== this.totalProducts) {
+        if (this.currentTotal < this.totalProducts) {
+          await this.$store.dispatch('product/loadMoreProducts', this.$route.params.category)
+        }
+      }
     },
 
     methods: {
@@ -94,6 +99,18 @@
 
         const bottomOfPage = visible + scrollY + 150 >= pageHeight
         return bottomOfPage || pageHeight < visible
+      },
+
+      scrollCheck () {
+        const visible = document.documentElement.clientHeight
+        let pageHeight = null
+        if (document.documentElement.clientWidth <= 800 && document.documentElement.clientHeight <= 600) {
+          pageHeight = document.documentElement.scrollHeight - 60
+        } else {
+          pageHeight = document.documentElement.scrollHeight
+        }
+
+        return pageHeight > visible
       }
     },
 
