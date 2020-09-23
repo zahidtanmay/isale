@@ -11,6 +11,7 @@
         :key="category.name"
         :cols="12"
         md="4"
+        class="py-1"
       >
         <v-card outlined hover ripple nuxt :to="category.slug">
           <v-list-item>

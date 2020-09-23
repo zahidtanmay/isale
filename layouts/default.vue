@@ -62,6 +62,10 @@
     data: () => ({
 
     }),
+
+    mounted () {
+      console.log('hello mounted layout')
+    }
   }
 </script>
 

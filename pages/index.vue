@@ -61,6 +61,7 @@
     },
 
     mounted(){
+      console.log('xoxo')
       this.$store.dispatch('product/fetchDeals')
     },
 

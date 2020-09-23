@@ -22,36 +22,42 @@
     </no-ssr>
 
 
+
+    <v-btn text nuxt to="/help" class="ml-2">Help & More</v-btn>
+
     <v-spacer></v-spacer>
 
     <v-spacer></v-spacer>
+
+
 
 
     <no-ssr>
       <template v-if="this.$auth.loggedIn">
 
-        <div><v-menu
-          offset-y
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-bind="attrs"
-              v-on="on"
-              icon
-            >
-              <v-icon>mdi-account</v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-              v-for="(item, index) in sessions"
-              :key="index"
-              @click="sessionTo(item.link)"
-            >
-              <v-list-item-title >{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu></div>
+        <div>
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-bind="attrs"
+                v-on="on"
+                icon
+              >
+                <v-icon>mdi-account</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item
+                v-for="(item, index) in sessions"
+                :key="index"
+                @click="sessionTo(item.link)"
+                class="menu-item"
+              >
+                <v-list-item-title >{{ item.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
 
       </template>
 
@@ -127,6 +133,10 @@
     components: {
       LoginDialog
     },
+
+    mounted () {
+      console.log('header')
+    }
   }
 </script>
 
@@ -135,4 +145,5 @@
   .main-nav-bar { background-color: $nav-bar-color !important;border-color: $nav-bar-color !important; }
   .place-holder-btn { color: $nav-bar-color !important; }
   .search-input { color: grey !important; }
+  .menu-item { min-height: 36px; }
 </style>

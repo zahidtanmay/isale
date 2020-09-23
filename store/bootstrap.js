@@ -7,7 +7,8 @@ export const state = () => ({
   areas: [],
   customFields: {},
   banners: [],
-  reviews: []
+  reviews: [],
+  pages: [],
 })
 
 export const getters = {
@@ -18,7 +19,8 @@ export const getters = {
   getCustomFields: state => state.customFields,
   getCustomCategories: state => state.customCategories,
   getBanners: state => state.banners,
-  getReviews: state => state.reviews
+  getReviews: state => state.reviews,
+  getPages: state => state.pages,
 }
 
 export const mutations = {
@@ -44,7 +46,8 @@ export const mutations = {
   },
 
   SET_BANNERS: (state, value) => { state.banners = value },
-  SET_REVIEWS: (state, value) => { state.reviews = value }
+  SET_REVIEWS: (state, value) => { state.reviews = value },
+  SET_PAGES: (state, value) => { state.pages = value },
 
 }
 
@@ -56,6 +59,7 @@ export const actions = {
     commit('SET_COMPANY', data.data.company)
     commit('SET_BANNERS', data.meta.topBanners)
     commit('SET_REVIEWS', data.data.reviews)
+    commit('SET_PAGES', data.data.pages)
   },
 
   async fetchVersion ({commit}) {

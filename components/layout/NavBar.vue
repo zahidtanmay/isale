@@ -196,7 +196,7 @@
     // },
 
     mounted(){
-      console.log('landing nav')
+      console.log('landing nav 2')
     },
 
   }
