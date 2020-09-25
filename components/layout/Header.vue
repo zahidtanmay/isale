@@ -14,59 +14,54 @@
       ></v-img>
     </nuxt-link>
 
-    <no-ssr>
-      <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search" v-model="search" background-color="amber lighten-2" class="search-input"></v-text-field>
-      <template slot="placeholder">
-        <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search" background-color="amber lighten-2" class="search-input"></v-text-field>
-      </template>
-    </no-ssr>
-
-
-
-    <v-btn text nuxt to="/help" class="ml-2">Help & More</v-btn>
+    <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search" v-model="search" background-color="amber lighten-2" class="search-input"></v-text-field>
 
     <v-spacer></v-spacer>
 
-    <v-spacer></v-spacer>
+    <span class="title d-none d-md-flex"><v-icon>mdi-phone</v-icon> {{company.mobile}}</span>
 
+    <v-divider class="mx-4 d-none d-md-flex" inset vertical></v-divider>
 
+    <v-btn text nuxt to="/help" class="ml-2 d-none d-md-flex">Help & More</v-btn>
 
+    <v-divider class="mx-4 d-none d-md-flex" inset vertical></v-divider>
 
     <no-ssr>
+
       <template v-if="this.$auth.loggedIn">
-
-        <div>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                v-bind="attrs"
-                v-on="on"
-                icon
-              >
+              <v-btn v-bind="attrs" v-on="on" icon>
                 <v-icon>mdi-account</v-icon>
               </v-btn>
             </template>
             <v-list>
-              <v-list-item
-                v-for="(item, index) in sessions"
-                :key="index"
-                @click="sessionTo(item.link)"
-                class="menu-item"
-              >
+              <v-list-item v-for="(item, index) in authDropdown" :key="index" @click="sessionTo(item.link)" class="menu-item">
                 <v-list-item-title >{{ item.title }}</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
-        </div>
-
       </template>
 
       <template v-else>
-        <v-btn color="error" dark large tile outlined @click="setLoginDialog" class="my-2 d-none d-md-flex">Sign In</v-btn>
-        <v-btn icon @click="setLoginDialog" class="d-md-none"><v-icon>mdi-login</v-icon></v-btn>
+        <v-btn color="error" dark large tile text @click="setLoginDialog" class="my-2 d-none d-md-flex">Sign In</v-btn>
+
+        <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn v-bind="attrs" v-on="on" icon class="d-md-none"> <v-icon>mdi-dots-vertical</v-icon></v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item
+              v-for="(item, index) in dropdown" :key="index" @click="sessionTo(item.link)" class="menu-item">
+              <v-list-item-title >{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </template>
 
-      <template slot="placeholder"><v-btn depressed outlined color="amber" class="placeholder-btn"></v-btn></template>
+      <template slot="placeholder"><v-btn depressed text color="amber" class="placeholder-btn"></v-btn></template>
+
     </no-ssr>
 
     <login-dialog></login-dialog>
@@ -81,10 +76,14 @@
   export default {
     name: 'HeaderBar',
     data: () => ({
-      sessions: [
+      authDropdown: [
         { 'title': 'Profile', 'link': 'profile' },
         { 'title': 'Orders', 'link': 'orders' },
         { 'title': 'Logout', 'link': 'logout' },
+      ],
+      dropdown: [
+        { 'title': 'Need Help', 'link': 'help' },
+        { 'title': 'Sign In', 'link': 'login' },
       ]
     }),
 
@@ -110,7 +109,7 @@
         this.$store.commit('component/setNavDrawer', !this.drawer)
       },
 
-      setLoginDialog () {
+      setLoginDialog() {
         this.$store.commit('component/setLoginDialog', true)
       },
 
@@ -124,6 +123,12 @@
             break
           case 'logout':
             this.$store.dispatch('profile/logout')
+            break
+          case 'help':
+            this.$router.push('/help')
+            break
+          case 'login':
+            this.setLoginDialog()
             break
           default:
         }

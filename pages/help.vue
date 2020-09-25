@@ -6,33 +6,16 @@
           <h1 class="font-weight-bold display-1 basil--text">{{title | showTitle}}</h1>
         </v-card-title>
 
-        <v-tabs
-          v-model="tab"
-          background-color="transparent"
-          color="basil"
-          grow
-        >
-          <v-tab
-            v-for="page in pages"
-            :key="page.name"
-          >
-            {{ page.name }}
-          </v-tab>
+        <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
+          <v-tab v-for="page in pages" :key="page.name">{{ page.name }}</v-tab>
         </v-tabs>
 
         <v-tabs-items v-model="tab">
-          <v-tab-item
-            v-for="page in pages"
-            :key="page.name"
-          >
-            <v-card
-              color="basil"
-              flat
-            >
-              <v-card-text>{{ page.body }}</v-card-text>
-            </v-card>
+          <v-tab-item v-for="page in pages" :key="page.name">
+            <v-card color="basil" flat><v-card-text>{{ page.body }}</v-card-text></v-card>
           </v-tab-item>
         </v-tabs-items>
+
       </v-card>
     </template>
 
@@ -51,11 +34,7 @@
 
     data: () => ({
       tab: null,
-      items: [
-        'Appetizers', 'Entrees', 'Deserts', 'Cocktails',
-      ],
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    }),
+      }),
 
     components: {
       SingleItem,

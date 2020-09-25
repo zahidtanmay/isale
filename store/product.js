@@ -110,7 +110,7 @@ export const actions = {
   },
 
   async fetchDeals({commit}, value) {
-    let {data} = await this.$axios.get(`products?cols=*`)
+    let {data} = await this.$axios.get(`products?cols=*&filters=customFieldId:1`)
     commit('SET_DEALS', data.data)
   },
 
