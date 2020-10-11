@@ -30,6 +30,16 @@
   export default {
     name: 'Help',
     auth: false,
+    head () {
+      return {
+        title: 'Help',
+        meta: [
+          // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+          { hid: 'description', name: 'description', content: 'My custom description' }
+        ]
+      }
+    },
+
     inject: ['theme'],
 
     data: () => ({

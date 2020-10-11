@@ -28,6 +28,7 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
   import LandingBanner from '~/components/landing/LandingBanner'
   import LandingCategories from '~/components/landing/LandingCategories'
   import LandingExplore from '~/components/landing/LandingExplore'
@@ -42,6 +43,12 @@
       inject: ['theme'],
     }),
 
+    computed: {
+      ...mapGetters({
+        company: 'bootstrap/getCompanyDetails'
+      })
+    },
+
     components: {
       LandingBanner,
       LandingCategories,
@@ -52,7 +59,7 @@
 
     head () {
       return {
-        title: 'Home',
+        title: this.company.slogan,
         meta: [
           // hid is used as unique identifier. Do not use `vmid` for it as it will not work
           { hid: 'description', name: 'description', content: 'My custom description' }

@@ -42,6 +42,24 @@
     name: 'MyOrders',
     title: 'Orders',
 
+    head () {
+      return {
+        title: 'MyOrders',
+        meta: [
+          // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+          { hid: 'description', name: 'description', content: 'My custom description' }
+        ]
+      }
+    },
+
+    middleware({ store, redirect, $auth }) {
+      // If the user is not authenticated
+      console.log($auth)
+      if (!$auth.loggedIn) {
+        return redirect('/login')
+      }
+    },
+
     mounted() {
       this.$store.dispatch('orders/fetchOrders')
     },

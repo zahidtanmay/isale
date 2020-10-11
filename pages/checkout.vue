@@ -17,17 +17,19 @@
 
             <v-window-item :value="2"><DeliveryTime/></v-window-item>
 
-            <v-window-item :value="3"><OrderConfirm/></v-window-item>
+            <v-window-item :value="3"><Payment/></v-window-item>
+
+            <v-window-item :value="4"><OrderConfirm/></v-window-item>
 
           </v-window>
 
           <v-divider></v-divider>
 
-          <v-btn depressed color="error" class="mt-4" v-if="step === 3" @click="$router.push('/')">Back to Home</v-btn>
+          <v-btn depressed color="error" class="mt-4" v-if="step === 4" @click="$router.push('/')">Back to Home</v-btn>
 
           <v-card-actions>
 
-            <v-btn :disabled="step === 1" text @click="step--" v-if="step === 1 || step === 2">Back</v-btn>
+            <v-btn :disabled="step === 1" text @click="step--" v-if="step === 1 || step === 2 || step === 3">Back</v-btn>
 
             <v-spacer></v-spacer>
 
@@ -43,9 +45,19 @@
 
             <v-btn
               v-if="step === 2"
-              color="error"
+              color="primary"
               depressed
               :disabled="!deliveryDay || !deliveryTime || !deliveryNote"
+              @click="step++"
+            >
+              Next
+            </v-btn>
+
+            <v-btn
+              v-if="step === 3"
+              color="error"
+              depressed
+              :disabled="!(paymentMethod >= 0)"
               @click="placeOrder"
             >
               Confirm Order
@@ -69,6 +81,7 @@
   import {mapGetters} from 'vuex'
   import Address from '~/components/checkout/Address'
   import DeliveryTime from '~/components/checkout/DeliveryTime'
+  import Payment from '@/components/checkout/Payment'
   import OrderConfirm from '~/components/checkout/OrderConfirm'
   import AddressDialog from '~/components/address/AddressDialog.vue'
 
@@ -79,10 +92,24 @@
       Address,
       DeliveryTime,
       OrderConfirm,
+      Payment,
       AddressDialog
     },
 
-    middleware({ store, redirect }) {
+    head () {
+      return {
+        title: 'Checkout',
+        meta: [
+          // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+          { hid: 'description', name: 'description', content: 'My custom description' }
+        ]
+      }
+    },
+
+    middleware({ store, redirect, $auth }) {
+      if (!$auth.loggedIn) {
+        return redirect('/login')
+      }
       store.dispatch('checkout/fetchLedgers')
       store.dispatch('profile/fetchLocations')
       store.dispatch('bootstrap/fetchAreas')
@@ -91,7 +118,7 @@
 
     data: () => ({
       step: 1,
-      steps: ['Address', 'Select Delivery Date Time', 'Confirm'],
+      steps: ['Address', 'Select Delivery Date Time', 'Payment', 'Confirm'],
     }),
 
     computed: {
@@ -99,13 +126,15 @@
         checkoutLocation: 'checkout/getCheckoutLocation',
         deliveryDay: 'checkout/getDeliveryDay',
         deliveryTime: 'checkout/getDeliveryTime',
-        deliveryNote: 'checkout/getDeliveryNote'
+        deliveryNote: 'checkout/getDeliveryNote',
+        paymentMethod: 'checkout/getPaymentMethod'
       }),
 
       currentTitle () {
         switch (this.step) {
           case 1: return 'Address'
           case 2: return 'Select Delivery Date Time'
+          case 3: return 'Select Payment Method'
           default: return 'Order Summary'
         }
       },

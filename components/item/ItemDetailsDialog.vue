@@ -8,10 +8,9 @@
       <v-container>
 
         <v-row>
+          <v-col md="6"><Zoomer :imgSrc="item.imageUrl" :key="item.name+this.$vuetify.breakpoint.name" :breakpoint="this.$vuetify.breakpoint.name"/></v-col>
 
-          <v-col md="6"><Zoomer :imgSrc="item.imageUrl" :key="item.name" /></v-col>
-
-          <v-col md="6">
+          <v-col md="6" :class="this.$vuetify.breakpoint.name === 'xs' ? 'itemdetails-xs' : ''">
 
             <v-card-text class="py-0">
 
@@ -155,4 +154,5 @@
 <style>
   .item-details-description { color: rgba(0,0,0,1);}
   .specification-card { max-height: 143px !important; overflow: auto !important; }
+  .itemdetails-xs { margin-top: 125px; }
 </style>

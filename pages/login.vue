@@ -15,6 +15,16 @@
     name: 'LogIn',
     auth: 'guest',
 
+    head () {
+      return {
+        title: 'Login',
+        meta: [
+          // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+          { hid: 'description', name: 'description', content: 'My custom description' }
+        ]
+      }
+    },
+
     components: {
       LoginForm
     }

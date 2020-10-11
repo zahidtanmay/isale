@@ -27,6 +27,26 @@
 
     title: 'Profile',
 
+    head () {
+      return {
+        title: 'MyProfile',
+        meta: [
+          // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+          { hid: 'description', name: 'description', content: 'My custom description' }
+        ]
+      }
+    },
+
+    middleware({ store, redirect, $auth }) {
+      if (!$auth.loggedIn) {
+        return redirect('/login')
+      }
+      store.dispatch('checkout/fetchLedgers')
+      store.dispatch('profile/fetchLocations')
+      store.dispatch('bootstrap/fetchAreas')
+      store.dispatch('checkout/fetchDeliverySlots')
+    },
+
     mounted() {
       this.$store.dispatch('profile/fetchLocations')
       this.$store.dispatch('bootstrap/fetchAreas')

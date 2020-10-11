@@ -2,10 +2,10 @@
   <v-container class="pa-4">
 
     <v-row v-if="loader">
-      <template v-for="n in 12">
+      <template v-for="n in 48">
         <v-skeleton-loader
           class="mx-auto"
-          min-width="210"
+          min-width="220"
           max-width="300"
           height="320"
           type="card"

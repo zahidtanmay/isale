@@ -6,7 +6,8 @@ export const state = () => ({
   deliveryNote: '',
   orderId: null,
   checkoutDetails: {},
-  deliverySlots: []
+  deliverySlots: [],
+  paymentMethod: null,
 })
 
 export const getters = {
@@ -17,7 +18,8 @@ export const getters = {
   getDeliveryNote: state => state.deliveryNote,
   getOrderId: state => state.orderId,
   getCheckoutDetails: state => state.checkoutDetails,
-  getDeliverySlots: state => state.deliverySlots
+  getDeliverySlots: state => state.deliverySlots,
+  getPaymentMethod: state => state.paymentMethod,
 }
 
 export const mutations = {
@@ -28,7 +30,8 @@ export const mutations = {
   SET_DELIVERY_NOTE: (state, value) => { state.deliveryNote = value },
   SET_ORDER_ID: (state, value) => { state.orderId = value },
   SET_CHECKOUT_DETAILS: (state, value) => { state.checkoutDetails = value },
-  SET_DELIVERY_SLOTS: (state, value) => { state.deliverySlots = value }
+  SET_DELIVERY_SLOTS: (state, value) => { state.deliverySlots = value },
+  SET_PAYMENT_METHOD: (state, value) => { state.paymentMethod = value },
 }
 
 export const actions = {

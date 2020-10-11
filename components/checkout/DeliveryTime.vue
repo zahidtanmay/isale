@@ -96,6 +96,7 @@
       },
       day: {
         get() {
+          console.log(this.$store.state.checkout.deliveryDay)
           return this.$store.state.checkout.deliveryDay
         },
         set(val) {
@@ -120,6 +121,7 @@
     },
 
     mounted() {
+      this.$store.commit('checkout/SET_DELIVERY_DAY', null)
       let curr = new Date;
       let days = []
       const monthNames = ["January", "February", "March", "April", "May", "June",
