@@ -99,7 +99,9 @@
         },
         set(val) {
           this.$store.commit('product/SET_KEYWORD', val)
-          this.$store.dispatch('product/getSearchedProduct', val)
+          if (this.$route.name !== 'search') {
+            this.$store.dispatch('product/getSearchedProduct', val)
+          }
         }
       }
     },

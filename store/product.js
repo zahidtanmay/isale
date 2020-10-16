@@ -9,7 +9,7 @@ export const state = () => ({
   keyword: '',
   page: 1,
   totalProducts: 0,
-  currentProductCount: 0
+  currentProductCount: 0,
 })
 
 export const getters = {
@@ -22,6 +22,7 @@ export const getters = {
   getSLoader: state => state.searchLoader,
   getTotalProducts: state => state.totalProducts,
   getCurrentProductCount: state => state.currentProductCount,
+  getKeyword: state => state.keyword
 }
 
 export const mutations = {
@@ -60,13 +61,14 @@ export const mutations = {
   SET_LOADER: (state, value) => { state.loader = value },
   SET_SEARCHED_PRODUCTS: (state, value) => { state.searchedProduct = value },
   SET_SLOADER: (state, value) => { state.searchLoader = value },
-  SET_KEYWORD: (state, value) => { console.log(value);state.keyword = value },
+  SET_KEYWORD: (state, value) => { state.keyword = value },
   APPEND_PRODUCTS: (state, value) => { state.products = [ ...state.products, ...value ]},
   RESET_PAGE: (state) => { state.page = 1 },
   SET_TOTAL_PRODUCTS: (state, value) => { state.totalProducts = value },
   SET_CURRENT_PRODUCT_COUNT: (state, value) => { state.currentProductCount += value },
   RESET_CURRENT_PRODUCT_COUNT: (state, value) => { state.currentProductCount = value },
   SET_PAGE: (state, value) => { state.page = value },
+  APPEND_SPRODUCTS: (state, value) => { state.searchedProduct = [ ...state.searchedProduct, ...value ] }
 
 }
 
@@ -115,10 +117,26 @@ export const actions = {
   },
 
   async getSearchedProduct({commit, state}, value) {
-    this.$router.push('/search')
     commit('SET_SLOADER', true)
     let {data} = await this.$axios.get(`products?filters=keyword:${value}&cols=*&page=1`)
+    console.log('current total', data.data.length)
+    commit('SET_TOTAL_PRODUCTS', parseInt(data.meta.pagination.total))
     commit('SET_SEARCHED_PRODUCTS', data.data)
+    commit('RESET_CURRENT_PRODUCT_COUNT', data.data.length)
+    commit('RESET_PAGE')
+    this.$router.push('/search')
+    commit('SET_SLOADER', false)
+  },
+
+  async loadMoreSearchedProducts({commit, state}, value) {
+    let nextPage = state.page + 1
+    commit('SET_SLOADER', true)
+    let {data} = await this.$axios.get(`products?filters=keyword:${state.keyword}&cols=*&page=${nextPage}`)
+    if (data.data.length > 0) {
+      commit('APPEND_SPRODUCTS', data.data)
+      commit('SET_PAGE', nextPage)
+      commit('SET_CURRENT_PRODUCT_COUNT', data.data.length)
+    }
     commit('SET_SLOADER', false)
   },
 
