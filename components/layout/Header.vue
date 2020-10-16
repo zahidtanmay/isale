@@ -8,8 +8,8 @@
       <v-img
         :src="company.logo"
         contain
-        max-height="60px"
-        :width="$vuetify.breakpoint.name === 'xs' ? '40px' : '80px'"
+        max-height="80px"
+        :width="$vuetify.breakpoint.name === 'xs' ? '90px' : '160px'"
         :class="$vuetify.breakpoint.name === 'xs' ? 'mx-3' : 'mx-8'"
       ></v-img>
     </nuxt-link>
