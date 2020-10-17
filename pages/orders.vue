@@ -10,18 +10,22 @@
     <v-row justify="center">
 
       <v-col md="8" v-if="loader">
-
-        <v-skeleton-loader
-          :loading="true"
-          height="94"
-          type="list-item-two-line"
-        >
-        </v-skeleton-loader>
+        <template v-for="i in 5">
+          <v-skeleton-loader
+            :loading="true"
+            height="94"
+            type="list-item-two-line"
+          >
+          </v-skeleton-loader>
+        </template>
       </v-col>
 
       <v-col md="8" v-else>
         <template v-for="(order, index) in orders">
           <single-order :orderDetails="order" :orderIndex="index" />
+        </template>
+        <template v-if="orders.length === 0">
+          You have no order.
         </template>
       </v-col>
 
@@ -54,26 +58,76 @@
 
     middleware({ store, redirect, $auth }) {
       // If the user is not authenticated
-      console.log($auth)
       if (!$auth.loggedIn) {
         return redirect('/login')
       }
     },
 
-    mounted() {
-      this.$store.dispatch('orders/fetchOrders')
-    },
-
     computed: {
       ...mapGetters({
         orders: 'orders/getOrders',
-        loader: 'orders/getLoader'
+        loader: 'orders/getLoader',
+        currentTotal: 'orders/getCurrentOrderCount',
+        totalOrders: 'orders/getTotalOrders',
       })
+    },
+
+    async mounted() {
+      await this.$store.dispatch('profile/fetchLocations')
+      await this.$store.dispatch('orders/fetchOrders')
+
+      while(!this.scrollCheck() && this.currentTotal !== this.totalOrders) {
+        if (this.currentTotal < this.totalOrders) {
+          await this.$store.dispatch('orders/loadMoreOrders')
+        }
+      }
     },
 
     components: {
       SingleOrder,
       OrderDetailsDialog
+    },
+
+    methods: {
+      onScroll ({e}) {
+        if (this.bottomVisible() && this.currentTotal < this.totalOrders && !this.loader) {
+          this.$store.dispatch('orders/loadMoreOrders')
+        }
+      },
+
+      bottomVisible () {
+        const scrollY = window.scrollY
+        const visible = document.documentElement.clientHeight
+        let pageHeight = null
+        if (document.documentElement.clientWidth <= 800 && document.documentElement.clientHeight <= 600) {
+          pageHeight = document.documentElement.scrollHeight - 60
+        } else {
+          pageHeight = document.documentElement.scrollHeight
+        }
+
+        const bottomOfPage = visible + scrollY + 150 >= pageHeight
+        return bottomOfPage || pageHeight < visible
+      },
+
+      scrollCheck () {
+        const visible = document.documentElement.clientHeight
+        let pageHeight = null
+        if (document.documentElement.clientWidth <= 800 && document.documentElement.clientHeight <= 600) {
+          pageHeight = document.documentElement.scrollHeight - 60
+        } else {
+          pageHeight = document.documentElement.scrollHeight
+        }
+
+        return pageHeight > visible
+      }
+    },
+
+    created () {
+      window.addEventListener('scroll', this.onScroll)
+    },
+
+    destroyed () {
+      window.removeEventListener('scroll', this.onScroll)
     }
 
   }

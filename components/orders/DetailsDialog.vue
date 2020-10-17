@@ -12,7 +12,13 @@
 
       <v-card-text>
         <p class="text-center font-weight-medium mb-0 mt-2">Delivery Address</p>
-        <p class="text-center mb-0">Dhaka, Bangladesh</p>
+        <template v-if="location(activeOrder.locationId) === -1">
+          <p class="text-center mb-0">Location Not Found</p>
+        </template>
+        <template v-else>
+          <p class="text-center mb-0">{{location(activeOrder.locationId).locationName }}</p>
+          <p class="text-center mb-0">{{location(activeOrder.locationId).address1}},  {{location(activeOrder.locationId).city }} - {{location(activeOrder.locationId).zip }}</p>
+        </template>
 
       </v-card-text>
       <v-divider></v-divider>
@@ -61,8 +67,11 @@
         </v-row>
 
         <v-row>
-          <v-col cols="12">
+          <v-col cols="12" v-if="activeOrder.statusId == 0 || activeOrder.statusId == 1">
             <v-btn block depressed @click="orderAgain">Order Again</v-btn>
+          </v-col>
+          <v-col cols="12" v-if="activeOrder.statusId == 2">
+            <v-btn block depressed @click="cancelOrder">Cancel Order</v-btn>
           </v-col>
         </v-row>
 
@@ -83,8 +92,11 @@
 
     computed: {
       ...mapGetters({
-        activeOrder: 'orders/getActiveOrder'
+        activeOrder: 'orders/getActiveOrder',
+        locations: 'profile/getLocations'
       }),
+
+
 
       dialog: {
 
@@ -101,8 +113,18 @@
     },
 
     methods: {
+      location (val) {
+        const locationId = this.locations.findIndex(location => location.id === val)
+        if (locationId > -1) {
+          return this.locations[locationId]
+        }
+        return -1
+      },
       orderAgain () {
         this.$store.dispatch('cart/orderAgain', this.activeOrder.items)
+      },
+      cancelOrder () {
+        this.$store.dispatch('cart/cancelOrder', this.activeOrder)
       }
     }
 

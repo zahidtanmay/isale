@@ -55,7 +55,6 @@
     async mounted() {
       while(!this.scrollCheck() && this.currentTotal !== this.totalProducts) {
         if (this.currentTotal < this.totalProducts) {
-          console.log('load more search')
           await this.$store.dispatch('product/loadMoreSearchedProducts')
         }
       }

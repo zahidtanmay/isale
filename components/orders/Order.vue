@@ -29,9 +29,8 @@
     data: () => ({
       status: [
         'Cancelled',
-        'Unknown',
+        'Approved',
         'Pending',
-        'Approved'
       ]
     }),
 

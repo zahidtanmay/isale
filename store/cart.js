@@ -1,4 +1,5 @@
 import  Vue from 'vue'
+import error from "@/layouts/error";
 export const state = () => ({
   cartItems: Object.create(null),
   cartCount: 0,
@@ -161,6 +162,18 @@ export const actions = {
         commit('CALCULATE_CART_TOTAL')
       }
     })
+  },
+
+  async cancelOrder ({commit, state}, val) {
+    try {
+      let { data } = await this.$axios.delete(`/orders/${val.id}`)
+      commit('component/setOrderDialog', false, { root: true })
+      commit('orders/SET_ORDER', { id: val.id, status: '0' }, { root: true })
+      this.$toast.success(`Order cancelled successfully`)
+    } catch (e) {
+      console.log(e, e.response)
+      this.$toast.error(`Can't cancel now. Try again later.`)
+    }
   }
 
 }
