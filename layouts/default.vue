@@ -4,7 +4,10 @@
 
     <Header/>
 
-    <nav-bar></nav-bar>
+    <no-ssr>
+      <nav-bar></nav-bar>
+    </no-ssr>
+
 
     <no-ssr>
       <cart-drawer></cart-drawer>
@@ -65,6 +68,8 @@
 
     mounted () {
       console.log('hello mounted layout')
+      this.$store.dispatch('bootstrap/fetchLayout')
+      this.$store.dispatch('bootstrap/fetchCustomFields')
     }
   }
 </script>

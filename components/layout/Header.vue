@@ -3,22 +3,34 @@
   <v-app-bar app clipped-left clipped-right flat class="main-nav-bar">
     <v-app-bar-nav-icon @click="setNavDrawer"></v-app-bar-nav-icon>
 
+    <no-ssr>
+      <nuxt-link to="/" class="main-logo black--text">
+        <v-img
+          :src="company.logo"
+          contain
+          max-height="80px"
+          :width="$vuetify.breakpoint.name === 'xs' ? '90px' : '160px'"
+          :class="$vuetify.breakpoint.name === 'xs' ? 'mx-3' : 'mx-8'"
+        ></v-img>
+      </nuxt-link>
 
-    <nuxt-link to="/" class="main-logo black--text">
-      <v-img
-        :src="company.logo"
-        contain
-        max-height="80px"
-        :width="$vuetify.breakpoint.name === 'xs' ? '90px' : '160px'"
-        :class="$vuetify.breakpoint.name === 'xs' ? 'mx-3' : 'mx-8'"
-      ></v-img>
-    </nuxt-link>
-
-    <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search" v-model="search" background-color="amber lighten-2" class="search-input"></v-text-field>
+<!--      <template slot="placeholder">-->
+<!--        <v-skeleton-loader-->
+<!--          v-bind="attrs"-->
+<!--          type="card-heading"-->
+<!--        ></v-skeleton-loader>-->
+<!--      </template>-->
+    </no-ssr>
+<!--    -->
+    <no-ssr>
+      <v-text-field solo-inverted flat hide-details label="Search" prepend-inner-icon="search" v-model="search" background-color="amber lighten-2" class="search-input"></v-text-field>
+    </no-ssr>
 
     <v-spacer></v-spacer>
 
-    <span class="title d-none d-md-flex"><v-icon>mdi-phone</v-icon> {{company.mobile}}</span>
+    <no-ssr>
+      <span class="title d-none d-md-flex"><v-icon>mdi-phone</v-icon> {{company.mobile}}</span>
+    </no-ssr>
 
     <v-divider class="mx-4 d-none d-md-flex" inset vertical></v-divider>
 
@@ -64,18 +76,26 @@
 
     </no-ssr>
 
-    <login-dialog></login-dialog>
+    <no-ssr>
+      <login-dialog></login-dialog>
+    </no-ssr>
+
 
   </v-app-bar>
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+  import { mapGetters } from 'vuex'
   import LoginDialog from '~/components/login/LoginDialog.vue'
 
   export default {
     name: 'HeaderBar',
     data: () => ({
+      attrs: {
+        class: 'mb-6',
+        boilerplate: true,
+        elevation: 2,
+      },
       authDropdown: [
         { 'title': 'Profile', 'link': 'profile' },
         { 'title': 'Orders', 'link': 'orders' },
@@ -140,10 +160,6 @@
     components: {
       LoginDialog
     },
-
-    mounted () {
-      console.log('header')
-    }
   }
 </script>
 
