@@ -1,28 +1,15 @@
 <template>
   <v-container fluid>
 
-    <no-ssr>
-      <LandingBanner/>
-
-      <template slot="placeholder">
-        <v-skeleton-loader
-          height="300"
-          type="image"
-        ></v-skeleton-loader>
-      </template>
-    </no-ssr>
+    <LandingBanner/>
 
     <LandingCategories/>
 
     <LandingExplore/>
 
-    <no-ssr>
-      <ClientsSaying/>
-    </no-ssr>
-
+    <ClientsSaying/>
 
     <Footer/>
-
 
   </v-container>
 </template>
