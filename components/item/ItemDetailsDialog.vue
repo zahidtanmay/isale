@@ -8,7 +8,10 @@
       <v-container>
 
         <v-row>
-          <v-col md="6"><Zoomer :imgSrc="item.imageUrl" :key="item.name+this.$vuetify.breakpoint.name" :breakpoint="this.$vuetify.breakpoint.name"/></v-col>
+
+          <v-col md="6">
+            <Zoomer :imgSrc="item.images" :key="item.name+this.$vuetify.breakpoint.name" :breakpoint="this.$vuetify.breakpoint.name"/>
+          </v-col>
 
           <v-col md="6" :class="this.$vuetify.breakpoint.name === 'xs' ? 'itemdetails-xs' : ''">
 

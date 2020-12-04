@@ -23,11 +23,12 @@
       },
       images () {
         const images = this.imgSrc
+        console.log('imgs', this.imgSrc)
         let formattedImages = {
           normal_size: []
         }
 
-        if(Array.isArray(images)) {
+        if(Array.isArray(images) && images.length > 0) {
           images.forEach((item, index) => {
             formattedImages.normal_size.push({id: index, url: item })
           })
@@ -40,7 +41,7 @@
     },
 
     mounted() {
-      console.log('zoomer mounted')
+      console.log('zoomer mounted', this.imgSrc)
       const tag = this.$refs.productZoomer
       console.log(tag)
       tag.choosedThumb = tag.thumbs[0]
