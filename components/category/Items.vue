@@ -4,7 +4,7 @@
     <v-row v-if="loader">
       <template v-for="n in 48">
         <v-skeleton-loader
-          class="mx-auto"
+          class="mx-1"
           min-width="220"
           max-width="300"
           height="320"

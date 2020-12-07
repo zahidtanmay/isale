@@ -130,19 +130,19 @@ export const actions = {
 
   async loadMoreSearchedProducts({commit, state}, value) {
     let nextPage = state.page + 1
-    commit('SET_SLOADER', true)
+    // commit('SET_SLOADER', true)
     let {data} = await this.$axios.get(`products?filters=keyword:${state.keyword}&cols=*&page=${nextPage}`)
     if (data.data.length > 0) {
       commit('APPEND_SPRODUCTS', data.data)
       commit('SET_PAGE', nextPage)
       commit('SET_CURRENT_PRODUCT_COUNT', data.data.length)
     }
-    commit('SET_SLOADER', false)
+    // commit('SET_SLOADER', false)
   },
 
   async loadMoreProducts({commit, state, getters}, value) {
     let nextPage = state.page + 1
-    commit('SET_LOADER', true)
+    // commit('SET_LOADER', true)
 
     let filter = ''
     let slug = value.split('-')
@@ -169,7 +169,7 @@ export const actions = {
       commit('SET_CURRENT_PRODUCT_COUNT', data.data.length)
     }
 
-    commit('SET_LOADER', false)
+    // commit('SET_LOADER', false)
   }
 }
 

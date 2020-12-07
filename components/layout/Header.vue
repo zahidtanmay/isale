@@ -9,7 +9,7 @@
           :src="company.logo"
           contain
           max-height="80px"
-          :width="$vuetify.breakpoint.name === 'xs' ? '90px' : '160px'"
+          :width="$vuetify.breakpoint.name === 'xs' ? '0' : '160px'"
           :class="$vuetify.breakpoint.name === 'xs' ? 'mx-3' : 'mx-8'"
         ></v-img>
       </nuxt-link>
